@@ -10,6 +10,8 @@ namespace HotelManagementSystem
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddSingleton(builder.Configuration["connectionString"]);
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())

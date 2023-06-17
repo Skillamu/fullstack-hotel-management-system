@@ -6,5 +6,11 @@ namespace HotelManagementSystem.Controllers
     [ApiController]
     public class GuestController : ControllerBase
     {
+        private string _connStr;
+
+        public GuestController(string connStr)
+        {
+            _connStr = connStr;
+        }
     }
 }
