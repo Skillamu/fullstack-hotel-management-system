@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HotelManagementSystem.Models;
+using HotelManagementSystem.Repository;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementSystem.Controllers
 {
@@ -6,11 +8,17 @@ namespace HotelManagementSystem.Controllers
     [ApiController]
     public class GuestController : ControllerBase
     {
-        private string _connStr;
+        private readonly IGuestRepository _guestRepository;
 
-        public GuestController(string connStr)
+        public GuestController(IGuestRepository guestRepository)
         {
-            _connStr = connStr;
+            _guestRepository = guestRepository;
+        }
+
+        [HttpGet]
+        public IEnumerable<Guest> GetAllGuests()
+        {
+            return _guestRepository.GetAll();
         }
     }
 }

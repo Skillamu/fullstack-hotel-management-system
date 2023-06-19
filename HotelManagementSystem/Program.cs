@@ -1,3 +1,6 @@
+using HotelManagementSystem.Repository;
+using System.Data.SqlClient;
+
 namespace HotelManagementSystem
 {
     public class Program
@@ -10,7 +13,10 @@ namespace HotelManagementSystem
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddSingleton(builder.Configuration["connectionString"]);
+            var connStr = builder.Configuration["connectionString"];
+            builder.Services.AddSingleton(new SqlConnection(connStr));
+
+            builder.Services.AddScoped<IGuestRepository, GuestRepository>();
 
             var app = builder.Build();
 
