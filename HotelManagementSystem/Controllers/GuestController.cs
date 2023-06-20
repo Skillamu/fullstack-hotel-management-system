@@ -1,5 +1,5 @@
-﻿using HotelManagementSystem.Models;
-using HotelManagementSystem.Repository;
+﻿using HotelManagementSystem.Models.Dtos;
+using HotelManagementSystem.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementSystem.Controllers
@@ -15,10 +15,10 @@ namespace HotelManagementSystem.Controllers
             _guestRepository = guestRepository;
         }
 
-        [HttpGet]
-        public IEnumerable<Guest> GetAllGuests()
+        [HttpPost]
+        public void CreateGuest(GuestDto guestDto)
         {
-            return _guestRepository.GetAll();
+            _guestRepository.Insert(guestDto);
         }
     }
 }
