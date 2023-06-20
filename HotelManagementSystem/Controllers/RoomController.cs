@@ -6,11 +6,5 @@ namespace HotelManagementSystem.Controllers
     [ApiController]
     public class RoomController : ControllerBase
     {
-        private string _connStr;
-
-        public RoomController(string connStr)
-        {
-            _connStr = connStr;
-        }
     }
 }
