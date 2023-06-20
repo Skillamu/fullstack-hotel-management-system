@@ -1,4 +1,4 @@
-﻿namespace HotelManagementSystem.Models
+﻿namespace HotelManagementSystem.Models.Entities
 {
     public class Reservation
     {
