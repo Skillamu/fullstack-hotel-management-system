@@ -1,4 +1,4 @@
-using HotelManagementSystem.Repository;
+using HotelManagementSystem.Repositories;
 using System.Data.SqlClient;
 
 namespace HotelManagementSystem
