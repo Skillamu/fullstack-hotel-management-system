@@ -7,9 +7,13 @@
         public string LastName { get; }
         public string PhoneNr { get; }
 
-        public Guest (Guid id, string firstName, string lastName, string phoneNr)
+        public Guest()
         {
-            Id = id;
+        }
+
+        public Guest(string firstName, string lastName, string phoneNr)
+        {
+            if (Id == Guid.Empty) Id = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             PhoneNr = phoneNr;
