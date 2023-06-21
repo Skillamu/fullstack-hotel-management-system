@@ -17,6 +17,7 @@ namespace HotelManagementSystem
             builder.Services.AddSingleton(new SqlConnection(connStr));
 
             builder.Services.AddScoped<IGuestRepository, GuestRepository>();
+            builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 
             var app = builder.Build();
 
