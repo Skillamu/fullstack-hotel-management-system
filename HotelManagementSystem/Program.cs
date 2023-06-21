@@ -18,6 +18,7 @@ namespace HotelManagementSystem
 
             builder.Services.AddScoped<IGuestRepository, GuestRepository>();
             builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+            builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
 
             var app = builder.Build();
 

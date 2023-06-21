@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HotelManagementSystem.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementSystem.Controllers
 {
@@ -6,5 +7,11 @@ namespace HotelManagementSystem.Controllers
     [ApiController]
     public class ReservationController : ControllerBase
     {
+        private readonly IReservationRepository _reservationRepository;
+
+        public ReservationController(IReservationRepository reservationRepository)
+        {
+            _reservationRepository = reservationRepository;
+        }
     }
 }
