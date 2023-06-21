@@ -2,7 +2,7 @@
 {
     public class Room
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; }
         public short RoomNr { get; set; }
     }
 }
