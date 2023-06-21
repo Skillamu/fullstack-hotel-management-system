@@ -13,7 +13,7 @@
 
         public Guest(string firstName, string lastName, string phoneNr)
         {
-            if (Id == Guid.Empty) Id = Guid.NewGuid();
+            Id = Guid.NewGuid();
             FirstName = firstName;
             LastName = lastName;
             PhoneNr = phoneNr;
