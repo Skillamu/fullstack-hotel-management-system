@@ -1,6 +1,3 @@
-using HotelManagementSystem.Repositories;
-using System.Data.SqlClient;
-
 namespace HotelManagementSystem
 {
     public class Program
@@ -11,7 +8,7 @@ namespace HotelManagementSystem
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();;
+            builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
