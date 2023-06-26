@@ -1,6 +1,6 @@
 ﻿namespace HotelManagementSystem.Core.DomainModel
 {
-    internal class Guest
+    public class Guest
     {
         public Guid Id { get; }
         public string FirstName { get; private set; }

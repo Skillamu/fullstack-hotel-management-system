@@ -3,7 +3,7 @@ using HotelManagementSystem.Core.DomainServices;
 
 namespace HotelManagementSystem.Core.ApplicationServices
 {
-    internal class ReservationService
+    public class ReservationService
     {
         private readonly IReservationRepository _reservationRepository;
         private readonly IGuestRepository _guestRepository;
