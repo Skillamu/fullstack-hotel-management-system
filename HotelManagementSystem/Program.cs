@@ -11,14 +11,7 @@ namespace HotelManagementSystem
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            var connStr = builder.Configuration["connectionString"];
-            builder.Services.AddSingleton(new SqlConnection(connStr));
-
-            builder.Services.AddScoped<IGuestRepository, GuestRepository>();
-            builder.Services.AddScoped<IRoomRepository, RoomRepository>();
-            builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+            builder.Services.AddSwaggerGen();;
 
             var app = builder.Build();
 
