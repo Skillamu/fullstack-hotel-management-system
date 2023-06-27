@@ -1,3 +1,5 @@
+using HotelManagementSystem.Infrastructure.DataAccess;
+
 namespace HotelManagementSystem
 {
     public class Program
@@ -9,6 +11,9 @@ namespace HotelManagementSystem
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            var connStr = builder.Configuration["connectionString"];
+            builder.Services.AddSingleton(new SqlConnectionFactory(connStr));
 
             var app = builder.Build();
 
