@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementSystem.Infra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementSystem.Core", "HotelManagementSystem.Core\HotelManagementSystem.Core.csproj", "{3E570CDC-62C9-4B16-9B4E-70306EC4331E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManagementSystem.Infrastructure.DataAccess", "HotelManagementSystem.Infrastructure.DataAccess\HotelManagementSystem.Infrastructure.DataAccess.csproj", "{0D954D88-7E42-4332-91AA-9539AD8622C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementSystem.Infrastructure.DataAccess", "HotelManagementSystem.Infrastructure.DataAccess\HotelManagementSystem.Infrastructure.DataAccess.csproj", "{0D954D88-7E42-4332-91AA-9539AD8622C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManagementSystem.Infrastructure.Mapper", "HotelManagementSystem.Infrastructure.Mapper\HotelManagementSystem.Infrastructure.Mapper.csproj", "{14D48197-0514-4BF8-928C-5DB47EA65F15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{0D954D88-7E42-4332-91AA-9539AD8622C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D954D88-7E42-4332-91AA-9539AD8622C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D954D88-7E42-4332-91AA-9539AD8622C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14D48197-0514-4BF8-928C-5DB47EA65F15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14D48197-0514-4BF8-928C-5DB47EA65F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14D48197-0514-4BF8-928C-5DB47EA65F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14D48197-0514-4BF8-928C-5DB47EA65F15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
