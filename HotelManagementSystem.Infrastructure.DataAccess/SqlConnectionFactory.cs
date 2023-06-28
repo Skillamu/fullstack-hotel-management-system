@@ -11,7 +11,7 @@ namespace HotelManagementSystem.Infrastructure.DataAccess
             _connectionString = connectionString;
         }
 
-        public SqlConnection GetSqlConnection()
+        public SqlConnection CreateSqlConnection()
         {
             return new SqlConnection(_connectionString);
         }
