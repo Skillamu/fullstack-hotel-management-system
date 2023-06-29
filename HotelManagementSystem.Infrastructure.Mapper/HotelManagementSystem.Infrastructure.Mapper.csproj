@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HotelManagementSystem.Infrastructure.DataAccess\HotelManagementSystem.Infrastructure.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
