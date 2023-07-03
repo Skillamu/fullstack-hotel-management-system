@@ -2,5 +2,6 @@
 {
     public interface IRoomRepository
     {
+        public Guid GetIdByRoomNr(short roomNr);
     }
 }
