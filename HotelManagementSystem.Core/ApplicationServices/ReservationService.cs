@@ -5,18 +5,15 @@ namespace HotelManagementSystem.Core.ApplicationServices
 {
     public class ReservationService
     {
-        private readonly IReservationRepository _reservationRepository;
+        private readonly IRoomRepository _roomRepository;
         private readonly IGuestRepository _guestRepository;
+        private readonly IReservationRepository _reservationRepository;
 
-        public ReservationService(IReservationRepository reservationRepository, IGuestRepository guestRepository)
+        public ReservationService(IRoomRepository roomRepository, IGuestRepository guestRepository, IReservationRepository reservationRepository)
         {
-            _reservationRepository = reservationRepository;
+            _roomRepository = roomRepository;
             _guestRepository = guestRepository;
-        }
-
-        public Reservation GetReservationById(Guid id)
-        {
-            return _reservationRepository.GetById(id);
+            _reservationRepository = reservationRepository;
         }
 
         public void Create(Reservation reservation)
