@@ -12,7 +12,7 @@ namespace HotelManagementSystem.Infrastructure.DataAccess
             _sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public Guid GetIdByRoomNr(short roomNr)
+        public Guid GetRoomByRoomNr(short roomNr)
         {
             var sql = @"SELECT id FROM room WHERE room_nr = @RoomNr";
 
