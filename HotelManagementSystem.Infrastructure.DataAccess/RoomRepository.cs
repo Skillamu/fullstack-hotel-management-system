@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using HotelManagementSystem.Core.DomainModel;
 using HotelManagementSystem.Core.DomainServices;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess
@@ -12,9 +13,9 @@ namespace HotelManagementSystem.Infrastructure.DataAccess
             _sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public Guid GetRoomByRoomNr(short roomNr)
+        public Room GetRoomByRoomNr(short roomNr)
         {
-            var sql = @"SELECT id FROM room WHERE room_nr = @RoomNr";
+            var sql = @"SELECT id AS Id, room_nr AS RoomNr FROM room WHERE room_nr = @RoomNr";
 
             var parameters = new
             {
@@ -22,8 +23,8 @@ namespace HotelManagementSystem.Infrastructure.DataAccess
             };
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            var id = conn.QuerySingleOrDefault<Guid>(sql, parameters);
-            return id;
+            var room = conn.QuerySingleOrDefault<Room>(sql, parameters);
+            return room;
         }
     }
 }
