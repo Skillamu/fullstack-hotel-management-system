@@ -16,10 +16,20 @@ namespace HotelManagementSystem.Core.ApplicationServices
             _reservationRepository = reservationRepository;
         }
 
-        public void Create(Reservation reservation)
+        public Reservation Create(Reservation reservation)
         {
-            _reservationRepository.Create(reservation);
+            var room = _roomRepository.GetRoomByRoomNr(reservation.Room.RoomNr);
+
+            if (room == null)
+            {
+                return null;
+            }
+
+            reservation.AddRoom(room);
             _guestRepository.Create(reservation.Guest);
+            _reservationRepository.Create(reservation);
+
+            return reservation;
         }
     }
 }
