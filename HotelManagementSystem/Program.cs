@@ -1,3 +1,5 @@
+using HotelManagementSystem.Core.ApplicationServices;
+using HotelManagementSystem.Core.DomainServices;
 using HotelManagementSystem.Infrastructure.DataAccess;
 
 namespace HotelManagementSystem
@@ -14,6 +16,11 @@ namespace HotelManagementSystem
 
             var connStr = builder.Configuration["connectionString"];
             builder.Services.AddSingleton(new SqlConnectionFactory(connStr));
+
+            builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+            builder.Services.AddScoped<IGuestRepository, GuestRepository>();
+            builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+            builder.Services.AddScoped<ReservationService>();
 
             var app = builder.Build();
 
