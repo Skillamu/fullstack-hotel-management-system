@@ -1,4 +1,6 @@
 ﻿using HotelManagementSystem.Core.ApplicationServices;
+using HotelManagementSystem.Presentation.Mappers;
+using HotelManagementSystem.Presentation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementSystem.Controllers
@@ -12,6 +14,17 @@ namespace HotelManagementSystem.Controllers
         public ReservationController(ReservationService reservationService)
         {
             _reservationService = reservationService;
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<ReservationViewModel> Create(ReservationViewModel reservationViewModel)
+        {
+            var reservation = reservationViewModel.ToDomain();
+            var reservationCreated = _reservationService.Create(reservation);
+
+            return reservationCreated == null ? BadRequest() : Ok(reservationViewModel);
         }
     }
 }
