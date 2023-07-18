@@ -1,6 +1,7 @@
 using HotelManagementSystem.Core.ApplicationServices;
 using HotelManagementSystem.Core.DomainServices;
-using HotelManagementSystem.Infrastructure.DataAccess;
+using HotelManagementSystem.Infrastructure.DataAccess.Factories;
+using HotelManagementSystem.Infrastructure.DataAccess.Repositories;
 
 namespace HotelManagementSystem
 {
