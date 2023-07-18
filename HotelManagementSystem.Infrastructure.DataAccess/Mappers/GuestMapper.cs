@@ -1,6 +1,14 @@
-﻿namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
+﻿using HotelManagementSystem.Core.DomainModel;
+using HotelManagementSystem.Infrastructure.DataAccess.Entities;
+
+namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
 {
-    public class GuestMapper
+    public static class GuestMapper
     {
+        public static GuestEntity ToEntity(this Guest g)
+        {
+            var guestEntity = new GuestEntity(g.Id, g.FirstName, g.LastName, g.PhoneNr);
+            return guestEntity;
+        }
     }
 }
