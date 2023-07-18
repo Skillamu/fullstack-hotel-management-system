@@ -1,8 +1,9 @@
 ﻿using Dapper;
 using HotelManagementSystem.Core.DomainModel;
 using HotelManagementSystem.Core.DomainServices;
+using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 
-namespace HotelManagementSystem.Infrastructure.DataAccess
+namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 {
     public class RoomRepository : IRoomRepository
     {

@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 
-namespace HotelManagementSystem.Infrastructure.DataAccess
+namespace HotelManagementSystem.Infrastructure.DataAccess.Factories
 {
     public class SqlConnectionFactory
     {
