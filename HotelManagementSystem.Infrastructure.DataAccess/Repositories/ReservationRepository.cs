@@ -2,6 +2,7 @@
 using HotelManagementSystem.Core.DomainModel;
 using HotelManagementSystem.Core.DomainServices;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
+using HotelManagementSystem.Infrastructure.DataAccess.Mappers;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 {
@@ -18,15 +19,10 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
         {
             var sql = @"INSERT INTO reservation VALUES (@Id, @GuestId, @RoomId)";
 
-            var parameters = new
-            {
-                Id = reservation.Id,
-                GuestId = reservation.Guest.Id,
-                RoomId = reservation.Room.Id
-            };
+            var reservationEntity = reservation.ToEntity();
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            conn.Execute(sql, parameters);
+            conn.Execute(sql, reservationEntity);
         }
     }
 }
