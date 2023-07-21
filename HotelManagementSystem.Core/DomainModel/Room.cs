@@ -5,14 +5,20 @@
         public Guid Id { get; }
         public short RoomNr { get; private set; }
 
-        public Room(Guid id, short roomNr) : this(roomNr)
+        private Room(Guid id, short roomNr)
         {
             Id = id;
+            RoomNr = roomNr;
         }
 
-        public Room(short roomNr)
+        public static Room Create(Guid id, short roomNr)
         {
-            RoomNr = roomNr;
+            if (id == Guid.Empty)
+            {
+                return null;
+            }
+
+            return new Room(id, roomNr);
         }
     }
 }
