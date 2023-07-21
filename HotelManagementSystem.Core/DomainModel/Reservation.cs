@@ -12,10 +12,5 @@
             Guest = guest;
             Room = room;
         }
-
-        public void AddRoom(Room room)
-        {
-            Room = room;
-        }
     }
 }
