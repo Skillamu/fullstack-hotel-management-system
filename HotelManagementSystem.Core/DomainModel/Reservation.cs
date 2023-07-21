@@ -6,11 +6,21 @@
         public Guest Guest { get; private set; }
         public Room Room { get; private set; }
 
-        public Reservation(Guest guest, Room room)
+        private Reservation(Guest guest, Room room)
         {
             Id = Guid.NewGuid();
             Guest = guest;
             Room = room;
+        }
+
+        public static Reservation Create(Guest guest, Room room)
+        {
+            if (guest == null || room == null)
+            {
+                return null;
+            }
+
+            return new Reservation(guest, room);
         }
     }
 }
