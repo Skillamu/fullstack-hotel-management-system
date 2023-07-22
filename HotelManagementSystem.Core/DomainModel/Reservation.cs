@@ -6,21 +6,21 @@
         public Guest Guest { get; private set; }
         public Room Room { get; private set; }
 
-        private Reservation(Guest guest, Room room)
+        private Reservation(Guid id, Guest guest, Room room)
         {
-            Id = Guid.NewGuid();
+            Id = id;
             Guest = guest;
             Room = room;
         }
 
-        public static Reservation Create(Guest guest, Room room)
+        public static Reservation Create(Guid id, Guest guest, Room room)
         {
-            if (guest == null || room == null)
+            if (id == Guid.Empty || guest == null || room == null)
             {
                 return null;
             }
 
-            return new Reservation(guest, room);
+            return new Reservation(id, guest, room);
         }
     }
 }
