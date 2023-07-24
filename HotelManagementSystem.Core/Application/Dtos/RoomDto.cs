@@ -2,7 +2,7 @@
 {
     public class RoomDto
     {
-        public short RoomNr { get; set; }
+        public short RoomNr { get; private set; }
 
         public RoomDto(short roomNr)
         {

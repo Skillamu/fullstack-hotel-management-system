@@ -2,8 +2,8 @@
 {
     public class ReservationDto
     {
-        public GuestDto Guest { get; set; }
-        public RoomDto Room { get; set; }
+        public GuestDto Guest { get; private set; }
+        public RoomDto Room { get; private set; }
 
         public ReservationDto(GuestDto guest, RoomDto room)
         {
