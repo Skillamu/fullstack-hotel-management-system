@@ -1,4 +1,4 @@
-﻿namespace HotelManagementSystem.Core.DomainModel
+﻿namespace HotelManagementSystem.Core.Domain.Model
 {
     public class Guest
     {

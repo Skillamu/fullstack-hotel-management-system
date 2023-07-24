@@ -1,6 +1,6 @@
-﻿using HotelManagementSystem.Core.DomainModel;
+﻿using HotelManagementSystem.Core.Domain.Model;
 
-namespace HotelManagementSystem.Core.DomainServices
+namespace HotelManagementSystem.Core.Domain.Services
 {
     public interface IRoomRepository
     {
