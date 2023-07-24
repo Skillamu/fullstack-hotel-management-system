@@ -1,7 +1,8 @@
-﻿using HotelManagementSystem.Core.DomainModel;
-using HotelManagementSystem.Core.DomainServices;
+﻿using HotelManagementSystem.Core.Domain.Services;
+using HotelManagementSystem.Core.Domain.Model;
+using HotelManagementSystem.Core.Application.Dtos;
 
-namespace HotelManagementSystem.Core.ApplicationServices
+namespace HotelManagementSystem.Core.Application.Services
 {
     public class ReservationService
     {
@@ -16,20 +17,23 @@ namespace HotelManagementSystem.Core.ApplicationServices
             _reservationRepository = reservationRepository;
         }
 
-        public Reservation Create(Reservation reservation)
+        public ReservationDto Create(ReservationDto request)
         {
-            var room = _roomRepository.GetRoomByRoomNr(reservation.Room.RoomNr);
+            var guest = Guest.Create(Guid.NewGuid(), request.Guest.FirstName, request.Guest.LastName, request.Guest.PhoneNr);
 
-            if (room == null)
+            var room = _roomRepository.GetRoomByRoomNr(request.Room.RoomNr);
+
+            var reservation = Reservation.Create(Guid.NewGuid(), guest, room);
+
+            if (reservation == null)
             {
                 return null;
             }
 
-            reservation.AddRoom(room);
             _guestRepository.Create(reservation.Guest);
             _reservationRepository.Create(reservation);
 
-            return reservation;
+            return request;
         }
     }
 }
