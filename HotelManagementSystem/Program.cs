@@ -1,5 +1,5 @@
-using HotelManagementSystem.Core.ApplicationServices;
-using HotelManagementSystem.Core.DomainServices;
+using HotelManagementSystem.Core.Application.Services;
+using HotelManagementSystem.Core.Domain.Services;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Infrastructure.DataAccess.Repositories;
 

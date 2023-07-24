@@ -1,6 +1,5 @@
 ﻿using HotelManagementSystem.Core.Application.Dtos;
 using HotelManagementSystem.Core.Application.Services;
-using HotelManagementSystem.Presentation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementSystem.Controllers

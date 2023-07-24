@@ -1,6 +1,6 @@
 ﻿using Dapper;
-using HotelManagementSystem.Core.DomainModel;
-using HotelManagementSystem.Core.DomainServices;
+using HotelManagementSystem.Core.Domain.Services;
+using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Infrastructure.DataAccess.Entities;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Infrastructure.DataAccess.Mappers;

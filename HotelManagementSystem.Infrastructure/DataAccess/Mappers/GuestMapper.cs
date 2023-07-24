@@ -1,4 +1,4 @@
-﻿using HotelManagementSystem.Core.DomainModel;
+﻿using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Infrastructure.DataAccess.Entities;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
@@ -7,8 +7,7 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
     {
         public static GuestEntity ToEntity(this Guest g)
         {
-            var guestEntity = new GuestEntity(g.Id, g.FirstName, g.LastName, g.PhoneNr);
-            return guestEntity;
+            return new GuestEntity(g.Id, g.FirstName, g.LastName, g.PhoneNr);
         }
     }
 }

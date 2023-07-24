@@ -1,4 +1,4 @@
-﻿using HotelManagementSystem.Core.DomainModel;
+﻿using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Infrastructure.DataAccess.Entities;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
@@ -7,13 +7,7 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
     {
         public static Room ToDomain(this RoomEntity r)
         {
-            if (r == null)
-            {
-                return null;
-            }
-
-            var room = new Room(r.Id, r.RoomNr);
-            return room;
+            return Room.Create(r.Id, r.RoomNr);
         }
     }
 }
