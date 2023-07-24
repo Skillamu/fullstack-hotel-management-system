@@ -1,5 +1,5 @@
-﻿using HotelManagementSystem.Core.ApplicationServices;
-using HotelManagementSystem.Presentation.Mappers;
+﻿using HotelManagementSystem.Core.Application.Dtos;
+using HotelManagementSystem.Core.Application.Services;
 using HotelManagementSystem.Presentation.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,12 +19,11 @@ namespace HotelManagementSystem.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ReservationViewModel> Create(ReservationViewModel reservationViewModel)
+        public ActionResult<ReservationDto> Create(ReservationDto request)
         {
-            var reservation = reservationViewModel.ToDomain();
-            var reservationCreated = _reservationService.Create(reservation);
+            var reservation = _reservationService.Create(request);
 
-            return reservationCreated == null ? BadRequest() : Ok(reservationViewModel);
+            return reservation == null ? BadRequest() : Ok(request);
         }
     }
 }
