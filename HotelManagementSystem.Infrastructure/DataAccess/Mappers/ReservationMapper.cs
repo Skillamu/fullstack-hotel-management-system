@@ -7,7 +7,14 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
     {
         public static ReservationEntity ToEntity(this Reservation r)
         {
-            return new ReservationEntity(r.Id, r.Guest.Id, r.Room.Id);
+            return new ReservationEntity
+            {
+                Id = r.Id,
+                GuestId = r.Guest.Id,
+                RoomId = r.Room.Id,
+                CheckInDate = r.DateRange.CheckInDate,
+                CheckOutDate = r.DateRange.CheckOutDate
+            };
         }
     }
 }

@@ -17,7 +17,7 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 
         public void Create(Reservation reservation)
         {
-            var sql = @"INSERT INTO reservation VALUES (@Id, @GuestId, @RoomId)";
+            var sql = @"INSERT INTO reservation VALUES (@Id, @GuestId, @RoomId, @CheckInDate, @CheckOutDate)";
 
             var reservationEntity = reservation.ToEntity();
 
