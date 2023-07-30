@@ -1,6 +1,7 @@
 ﻿using HotelManagementSystem.Core.Domain.Services;
 using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Core.Application.Dtos;
+using HotelManagementSystem.Core.Domain.ValueObjects;
 
 namespace HotelManagementSystem.Core.Application.Services
 {
@@ -19,18 +20,30 @@ namespace HotelManagementSystem.Core.Application.Services
 
         public ReservationDto Create(ReservationDto request)
         {
+            _ = DateTime.TryParse(request.DateRange.CheckInDate, out DateTime checkInDate);
+            _ = DateTime.TryParse(request.DateRange.CheckOutDate, out DateTime checkOutDate);
+
+            var dateRange = DateRange.Create(checkInDate, checkOutDate);
+
+            var isRoomAvailable = _roomRepository.IsRoomAvailableWithinDateRange(request.Room.RoomNr, dateRange);
+
+            if (!isRoomAvailable)
+            {
+                return null;
+            }
+
             var guest = Guest.Create(Guid.NewGuid(), request.Guest.FirstName, request.Guest.LastName, request.Guest.PhoneNr);
 
             var room = _roomRepository.GetRoomByRoomNr(request.Room.RoomNr);
 
-            var reservation = Reservation.Create(Guid.NewGuid(), guest, room);
+            var reservation = Reservation.Create(Guid.NewGuid(), guest, room, dateRange);
 
             if (reservation == null)
             {
                 return null;
             }
 
-            _guestRepository.Create(reservation.Guest);
+            _guestRepository.Create(guest);
             _reservationRepository.Create(reservation);
 
             return request;
