@@ -2,15 +2,10 @@
 {
     public class ReservationEntity
     {
-        public Guid Id { get; }
-        public Guid GuestId { get; }
-        public Guid RoomId { get; }
-
-        public ReservationEntity(Guid id, Guid guestId, Guid roomId)
-        {
-            Id = id;
-            GuestId = guestId;
-            RoomId = roomId;
-        }
+        public Guid Id { get; set; }
+        public Guid GuestId { get; set; }
+        public Guid RoomId { get; set; }
+        public DateTime CheckInDate { get; set; }
+        public DateTime CheckOutDate { get; set; }
     }
 }
