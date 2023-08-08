@@ -21,13 +21,13 @@ namespace HotelManagementSystem.Core.Domain.Model
             IsVerified = isVerified;
         }
 
-        public static Reservation Create(Guest guest, Room room, DateRange dateRange)
+        public static Reservation? Create(Guest guest, Room room, DateRange dateRange)
         {
             var id = Guid.NewGuid();
             var createdAtDate = CreatedAtDate.Create(DateTime.Now);
             var isVerified = false;
 
-            if (id == Guid.Empty || guest == null || room == null || dateRange == null || createdAtDate == null || createdAtDate.Date > dateRange.CheckInDate)
+            if (!IsReservationDataValid(id, guest, room, dateRange, createdAtDate))
             {
                 return null;
             }
@@ -35,14 +35,24 @@ namespace HotelManagementSystem.Core.Domain.Model
             return new Reservation(id, guest, room, dateRange, createdAtDate, isVerified);
         }
 
-        public static Reservation Create(Guid id, Guest guest, Room room, DateRange dateRange, CreatedAtDate createdAtDate, bool isVerified)
+        public static Reservation? Create(Guid id, Guest guest, Room room, DateRange dateRange, CreatedAtDate createdAtDate, bool isVerified)
         {
-            if (id == Guid.Empty || guest == null || room == null || dateRange == null || createdAtDate == null || createdAtDate.Date > dateRange.CheckInDate)
+            if (!IsReservationDataValid(id, guest, room, dateRange, createdAtDate))
             {
                 return null;
             }
 
             return new Reservation(id, guest, room, dateRange, createdAtDate, isVerified);
+        }
+
+        private static bool IsReservationDataValid(Guid id, Guest guest, Room room, DateRange dateRange, CreatedAtDate createdAtDate)
+        {
+            if (id == Guid.Empty || guest == null || room == null || dateRange == null || createdAtDate == null || createdAtDate.Date > dateRange.CheckInDate)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
