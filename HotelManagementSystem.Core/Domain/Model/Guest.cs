@@ -15,14 +15,41 @@
             PhoneNr = phoneNr;
         }
 
-        public static Guest Create(Guid id, string firstName, string lastName, string phoneNr)
+        public static Guest? Create(string firstName, string lastName, string phoneNr)
         {
-            if (id == Guid.Empty || string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(phoneNr))
+            var id = Guid.NewGuid();
+
+            if (!IsGuestDataValid(id, firstName, lastName, phoneNr))
             {
                 return null;
             }
 
             return new Guest(id, firstName, lastName, phoneNr);
+        }
+
+        public static Guest? Create(Guid id, string firstName, string lastName, string phoneNr)
+        {
+            if (!IsGuestDataValid(id, firstName, lastName, phoneNr))
+            {
+                return null;
+            }
+
+            return new Guest(id, firstName, lastName, phoneNr);
+        }
+
+        private static bool IsGuestDataValid(Guid id, string firstName, string lastName, string phoneNr)
+        {
+            if (id == Guid.Empty)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(phoneNr))
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
