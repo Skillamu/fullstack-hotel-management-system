@@ -59,5 +59,25 @@ namespace HotelManagementSystem.Core.Application.Services
 
             return request;
         }
+
+        public bool VerifyReservation(VerificationDto request)
+        {
+            var reservation = _reservationRepository.GetUnverifiedReservationByGuestPhoneNr(request.PhoneNr);
+            var isVerified = _verificationService.Verify(request.PhoneNr, request.VerificationCode);
+
+            if (reservation == null || !isVerified)
+            {
+                return false;
+            }
+
+            if (reservation.TimeToVerifyHasExpired())
+            {
+                return false;
+            }
+
+            reservation.SetToVerified();
+            _reservationRepository.Update(reservation);
+            return true;
+        }
     }
 }
