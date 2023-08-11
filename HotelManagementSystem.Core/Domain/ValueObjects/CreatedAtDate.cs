@@ -2,11 +2,11 @@
 {
     public class CreatedAtDate
     {
-        public DateTime Date { get; }
+        public DateTime Value { get; }
 
         private CreatedAtDate(DateTime date)
         {
-            Date = date;
+            Value = date;
         }
 
         public static CreatedAtDate Create()
