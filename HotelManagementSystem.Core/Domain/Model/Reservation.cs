@@ -47,7 +47,7 @@ namespace HotelManagementSystem.Core.Domain.Model
 
         private static bool IsReservationDataValid(Guid id, Guest guest, Room room, DateRange dateRange, CreatedAtDate createdAtDate)
         {
-            if (id == Guid.Empty || guest == null || room == null || dateRange == null || createdAtDate == null || createdAtDate.Date > dateRange.CheckInDate)
+            if (id == Guid.Empty || guest == null || room == null || dateRange == null || createdAtDate == null || createdAtDate.Value > dateRange.CheckInDate)
             {
                 return false;
             }
@@ -58,6 +58,17 @@ namespace HotelManagementSystem.Core.Domain.Model
         public void SetToVerified()
         {
             IsVerified = true;
+        }
+
+        public bool TimeToVerifyHasExpired()
+        {
+            // Add additional date validation in this method later.
+            if (CreatedAtDate.Value.Minute + 1 < DateTime.Now.Minute)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
