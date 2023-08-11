@@ -54,5 +54,10 @@ namespace HotelManagementSystem.Core.Domain.Model
 
             return true;
         }
+
+        public void SetToVerified()
+        {
+            IsVerified = true;
+        }
     }
 }
