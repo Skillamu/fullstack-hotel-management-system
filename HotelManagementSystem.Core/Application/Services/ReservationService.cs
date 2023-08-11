@@ -60,7 +60,7 @@ namespace HotelManagementSystem.Core.Application.Services
             return request;
         }
 
-        public bool VerifyReservation(VerificationDto request)
+        public bool Verify(VerificationDto request)
         {
             var reservation = _reservationRepository.GetUnverifiedReservationByGuestPhoneNr(request.PhoneNr);
             var isVerified = _verificationService.Verify(request.PhoneNr, request.VerificationCode);
