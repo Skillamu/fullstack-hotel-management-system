@@ -6,6 +6,6 @@ namespace HotelManagementSystem.Core.Domain.Services
     public interface IRoomRepository
     {
         Room GetRoomByRoomNr(short roomNr);
-        bool IsRoomAvailableWithinDateRange(short roomNr, DateRange dateRange);
+        Room GetAvailableRoomWithinDateRange(short roomNr, DateRange dateRange);
     }
 }
