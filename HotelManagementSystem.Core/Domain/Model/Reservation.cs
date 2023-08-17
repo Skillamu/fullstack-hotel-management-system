@@ -4,55 +4,37 @@ namespace HotelManagementSystem.Core.Domain.Model
 {
     public class Reservation
     {
-        public Guid Id { get; }
+        private readonly Guid _id;
+        public Guid Id => _id;
         public Guest Guest { get; private set; }
         public Room Room { get; private set; }
         public DateRange DateRange { get; private set; }
         public CreatedAtDate CreatedAtDate { get; private set; }
         public bool IsVerified { get; private set; }
 
-        private Reservation(Guid id, Guest guest, Room room, DateRange dateRange, CreatedAtDate createdAtDate, bool isVerified)
+        private Reservation()
         {
-            Id = id;
+        }
+
+        private Reservation(Guest guest, Room room, DateRange dateRange)
+        {
             Guest = guest;
             Room = room;
             DateRange = dateRange;
-            CreatedAtDate = createdAtDate;
-            IsVerified = isVerified;
+
+            _id = Guid.NewGuid();
+            CreatedAtDate = CreatedAtDate.Create(DateTime.Now);
+            IsVerified = false;
         }
 
         public static Reservation? Create(Guest guest, Room room, DateRange dateRange)
         {
-            var id = Guid.NewGuid();
-            var createdAtDate = CreatedAtDate.Create(DateTime.Now);
-            var isVerified = false;
-
-            if (!IsReservationDataValid(id, guest, room, dateRange, createdAtDate))
+            if (guest == null || room == null || dateRange == null)
             {
                 return null;
             }
 
-            return new Reservation(id, guest, room, dateRange, createdAtDate, isVerified);
-        }
-
-        public static Reservation? Create(Guid id, Guest guest, Room room, DateRange dateRange, CreatedAtDate createdAtDate, bool isVerified)
-        {
-            if (!IsReservationDataValid(id, guest, room, dateRange, createdAtDate))
-            {
-                return null;
-            }
-
-            return new Reservation(id, guest, room, dateRange, createdAtDate, isVerified);
-        }
-
-        private static bool IsReservationDataValid(Guid id, Guest guest, Room room, DateRange dateRange, CreatedAtDate createdAtDate)
-        {
-            if (id == Guid.Empty || guest == null || room == null || dateRange == null || createdAtDate == null || createdAtDate.Date > dateRange.CheckInDate)
-            {
-                return false;
-            }
-
-            return true;
+            return new Reservation(guest, room, dateRange);
         }
     }
 }
