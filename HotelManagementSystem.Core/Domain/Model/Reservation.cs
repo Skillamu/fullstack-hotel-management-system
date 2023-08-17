@@ -36,5 +36,26 @@ namespace HotelManagementSystem.Core.Domain.Model
 
             return new Reservation(guest, room, dateRange);
         }
+
+        public bool SetToVerified()
+        {
+            if (IsVerified == true || TimeToVerifyHasExpired())
+            {
+                return false;
+            }
+
+            IsVerified = true;
+            return true;
+        }
+
+        private bool TimeToVerifyHasExpired()
+        {
+            if (DateTime.Now >= CreatedAtDate.Value.AddMinutes(5))
+            {
+                return true;
+            }
+
+            return false;   
+        }
     }
 }
