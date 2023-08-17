@@ -3,14 +3,14 @@
     public class GuestEntity
     {
         public Guid Id { get; }
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public string PhoneNr { get; private set; }
+        public string FirstName { get; }
+        public string LastName { get; }
+        public string PhoneNr { get; }
 
-        public GuestEntity(Guid id, string firstname, string lastName, string phoneNr)
+        public GuestEntity(Guid id, string firstName, string lastName, string phoneNr)
         {
             Id = id;
-            FirstName = firstname;
+            FirstName = firstName;
             LastName = lastName;
             PhoneNr = phoneNr;
         }

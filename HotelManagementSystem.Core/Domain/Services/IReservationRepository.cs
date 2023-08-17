@@ -8,6 +8,6 @@ namespace HotelManagementSystem.Core.Domain.Services
         void Update(Reservation reservation);
         void Delete(Reservation reservation);
         Reservation GetUnverifiedReservationByGuestPhoneNr(string phoneNr);
-        IEnumerable<Reservation> GetUnverifiedReservations();
+        int DeleteUnverifiedReservations();
     }
 }

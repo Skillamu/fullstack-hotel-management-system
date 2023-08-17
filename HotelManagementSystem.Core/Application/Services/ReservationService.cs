@@ -10,12 +10,15 @@ namespace HotelManagementSystem.Core.Application.Services
         private readonly IRoomRepository _roomRepository;
         private readonly IGuestRepository _guestRepository;
         private readonly IReservationRepository _reservationRepository;
+        private readonly IVerificationService _verificationService;
 
-        public ReservationService(IRoomRepository roomRepository, IGuestRepository guestRepository, IReservationRepository reservationRepository)
+        public ReservationService(IRoomRepository roomRepository, IGuestRepository guestRepository, IReservationRepository reservationRepository, IVerificationService verificationService)
         {
             _roomRepository = roomRepository;
             _guestRepository = guestRepository;
             _reservationRepository = reservationRepository;
+            _verificationService = verificationService;
+
         }
 
         public ReservationDto Create(ReservationDto request)
@@ -32,21 +35,49 @@ namespace HotelManagementSystem.Core.Application.Services
                 return null;
             }
 
-            var guest = Guest.Create(Guid.NewGuid(), request.Guest.FirstName, request.Guest.LastName, request.Guest.PhoneNr);
-
             var room = _roomRepository.GetRoomByRoomNr(request.Room.RoomNr);
 
-            var reservation = Reservation.Create(Guid.NewGuid(), guest, room, dateRange);
+            var isGuestReserved = _guestRepository.IsGuestWithPhoneNrReserved(request.Guest.PhoneNr);
 
-            if (reservation == null)
+            if (!isGuestReserved)
             {
-                return null;
+                var guest = Guest.Create(request.Guest.FirstName, request.Guest.LastName, request.Guest.PhoneNr);
+                var reservation = Reservation.Create(guest, room, dateRange);
+
+                _guestRepository.Create(guest);
+                _reservationRepository.Create(reservation);
+                _verificationService.Send(guest.PhoneNr);
+            }
+            else
+            {
+                var guest = _guestRepository.GetGuestByPhoneNr(request.Guest.PhoneNr);
+                var reservation = Reservation.Create(guest, room, dateRange);
+
+                _reservationRepository.Create(reservation);
+                _verificationService.Send(guest.PhoneNr);
             }
 
-            _guestRepository.Create(guest);
-            _reservationRepository.Create(reservation);
-
             return request;
+        }
+
+        public bool Verify(VerificationDto request)
+        {
+            var reservation = _reservationRepository.GetUnverifiedReservationByGuestPhoneNr(request.PhoneNr);
+            var isVerified = _verificationService.Verify(request.PhoneNr, request.VerificationCode);
+
+            if (reservation == null || !isVerified)
+            {
+                return false;
+            }
+
+            if (reservation.TimeToVerifyHasExpired())
+            {
+                return false;
+            }
+
+            reservation.SetToVerified();
+            _reservationRepository.Update(reservation);
+            return true;
         }
     }
 }
