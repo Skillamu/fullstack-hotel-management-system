@@ -18,7 +18,6 @@ namespace HotelManagementSystem.Core.Application.Services
             _guestRepository = guestRepository;
             _reservationRepository = reservationRepository;
             _verificationService = verificationService;
-
         }
 
         public ReservationDto Create(ReservationDto request)
@@ -63,14 +62,9 @@ namespace HotelManagementSystem.Core.Application.Services
         public bool Verify(VerificationDto request)
         {
             var reservation = _reservationRepository.GetUnverifiedReservationByGuestPhoneNr(request.PhoneNr);
-            var isVerified = _verificationService.Verify(request.PhoneNr, request.VerificationCode);
+            var verificationSucceed = _verificationService.Verify(request.PhoneNr, request.VerificationCode);
 
-            if (reservation == null || !isVerified)
-            {
-                return false;
-            }
-
-            if (reservation.TimeToVerifyHasExpired())
+            if (reservation == null || reservation.TimeToVerifyHasExpired() || !verificationSucceed)
             {
                 return false;
             }
