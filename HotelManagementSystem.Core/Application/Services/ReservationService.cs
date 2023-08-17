@@ -27,35 +27,44 @@ namespace HotelManagementSystem.Core.Application.Services
 
             var dateRange = DateRange.Create(checkInDate, checkOutDate);
 
-            var isRoomAvailable = _roomRepository.IsRoomAvailableWithinDateRange(request.Room.RoomNr, dateRange);
-
-            if (!isRoomAvailable)
+            if (dateRange == null)
             {
                 return null;
             }
 
-            var room = _roomRepository.GetRoomByRoomNr(request.Room.RoomNr);
+            var room = _roomRepository.GetAvailableRoomWithinDateRange(request.Room.RoomNr, dateRange);
 
-            var isGuestReserved = _guestRepository.IsGuestWithPhoneNrReserved(request.Guest.PhoneNr);
-
-            if (!isGuestReserved)
+            if (room == null)
             {
-                var guest = Guest.Create(request.Guest.FirstName, request.Guest.LastName, request.Guest.PhoneNr);
-                var reservation = Reservation.Create(guest, room, dateRange);
+                return null;
+            }
 
+            var guest = _guestRepository.GetGuestByPhoneNr(request.Guest.PhoneNr) ?? Guest.Create(request.Guest.FirstName, request.Guest.LastName, request.Guest.PhoneNr);
+
+            if (guest == null)
+            {
+                return null;
+            }
+
+            var reservation = Reservation.Create(guest, room, dateRange);
+
+            if (reservation == null)
+            {
+                return null;
+            }
+
+            var guestAlreadyExists = _guestRepository.GuestByPhoneNrAlreadyExists(guest.PhoneNr);
+
+            if (!guestAlreadyExists)
+            {
                 _guestRepository.Create(guest);
                 _reservationRepository.Create(reservation);
                 _verificationService.Send(guest.PhoneNr);
-            }
-            else
-            {
-                var guest = _guestRepository.GetGuestByPhoneNr(request.Guest.PhoneNr);
-                var reservation = Reservation.Create(guest, room, dateRange);
-
-                _reservationRepository.Create(reservation);
-                _verificationService.Send(guest.PhoneNr);
+                return request;
             }
 
+            _reservationRepository.Create(reservation);
+            _verificationService.Send(guest.PhoneNr);
             return request;
         }
 
