@@ -2,54 +2,33 @@
 {
     public class Guest
     {
-        public Guid Id { get; }
+        private readonly Guid _id;
+        public Guid Id => _id;
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
         public string PhoneNr { get; private set; }
 
-        private Guest(Guid id, string firstName, string lastName, string phoneNr)
+        private Guest()
         {
-            Id = id;
+        }
+
+        private Guest(string firstName, string lastName, string phoneNr)
+        {
             FirstName = firstName;
             LastName = lastName;
             PhoneNr = phoneNr;
+
+            _id = Guid.NewGuid();
         }
 
         public static Guest? Create(string firstName, string lastName, string phoneNr)
         {
-            var id = Guid.NewGuid();
-
-            if (!IsGuestDataValid(id, firstName, lastName, phoneNr))
-            {
-                return null;
-            }
-
-            return new Guest(id, firstName, lastName, phoneNr);
-        }
-
-        public static Guest? Create(Guid id, string firstName, string lastName, string phoneNr)
-        {
-            if (!IsGuestDataValid(id, firstName, lastName, phoneNr))
-            {
-                return null;
-            }
-
-            return new Guest(id, firstName, lastName, phoneNr);
-        }
-
-        private static bool IsGuestDataValid(Guid id, string firstName, string lastName, string phoneNr)
-        {
-            if (id == Guid.Empty)
-            {
-                return false;
-            }
-
             if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName) || string.IsNullOrEmpty(phoneNr))
             {
-                return false;
+                return null;
             }
 
-            return true;
+            return new Guest(firstName, lastName, phoneNr);
         }
     }
 }
