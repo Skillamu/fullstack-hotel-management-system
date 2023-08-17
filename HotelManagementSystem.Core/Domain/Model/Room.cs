@@ -2,23 +2,12 @@
 {
     public class Room
     {
-        public Guid Id { get; }
+        private readonly Guid _id;
+        public Guid Id => _id;
         public short RoomNr { get; private set; }
 
-        private Room(Guid id, short roomNr)
+        private Room()
         {
-            Id = id;
-            RoomNr = roomNr;
-        }
-
-        public static Room Create(Guid id, short roomNr)
-        {
-            if (id == Guid.Empty)
-            {
-                return null;
-            }
-
-            return new Room(id, roomNr);
         }
     }
 }
