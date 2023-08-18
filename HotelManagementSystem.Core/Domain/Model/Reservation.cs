@@ -23,7 +23,7 @@ namespace HotelManagementSystem.Core.Domain.Model
             DateRange = dateRange;
 
             _id = Guid.NewGuid();
-            CreatedAtDate = CreatedAtDate.Create(DateTime.Now);
+            CreatedAtDate = CreatedAtDate.Create();
             IsVerified = false;
         }
 
