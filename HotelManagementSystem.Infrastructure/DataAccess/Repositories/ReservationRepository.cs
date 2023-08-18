@@ -77,5 +77,14 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
             conn.Execute(sql, parameters);
         }
+
+        public void Delete(Reservation reservation)
+        {
+            var sql = @"DELETE FROM reservation WHERE id = @Id";
+            var parameters = new { Id = reservation.Id };
+
+            using var conn = _sqlConnectionFactory.CreateSqlConnection();
+            conn.Execute(sql, parameters);
+        }
     }
 }
