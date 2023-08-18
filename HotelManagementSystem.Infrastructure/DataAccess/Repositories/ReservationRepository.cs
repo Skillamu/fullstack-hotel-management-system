@@ -17,12 +17,21 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 
         public void Create(Reservation reservation)
         {
-            var sql = @"INSERT INTO reservation VALUES (@Id, @GuestId, @RoomId, @CheckInDate, @CheckOutDate)";
+            var sql = @"INSERT INTO reservation VALUES (@Id, @GuestId, @RoomId, @CheckInDate, @CheckOutDate, @CreatedAtDate, @IsVerified)";
 
-            var reservationEntity = reservation.ToEntity();
+            var parameters = new
+            {
+                Id = reservation.Id,
+                GuestId = reservation.Guest.Id,
+                RoomId = reservation.Room.Id,
+                CheckInDate = reservation.DateRange.CheckInDate,
+                CheckOutDate = reservation.DateRange.CheckOutDate,
+                CreatedAtDate = reservation.CreatedAtDate.Value,
+                IsVerified = reservation.IsVerified
+            };
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            conn.Execute(sql, reservationEntity);
+            conn.Execute(sql, parameters);
         }
     }
 }
