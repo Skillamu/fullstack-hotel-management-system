@@ -35,7 +35,7 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             conn.Execute(sql, parameters);
         }
 
-        public Reservation? GetUnverifiedReservationByPhoneNr(string phoneNr)
+        public Reservation GetUnverifiedReservationByGuestPhoneNr(string phoneNr)
         {
             var sql = @"SELECT reservation.id AS Id, check_in_date AS CheckInDate, check_out_date AS CheckOutDate,
                         created_at_date AS CreatedAtdate, is_verified AS IsVerified,
@@ -56,6 +56,26 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             splitOn: "Id, Id").SingleOrDefault();
 
             return reservation;
+        }
+
+        public void Update(Reservation reservation)
+        {
+            var sql = @"UPDATE reservation SET 
+                        check_in_date = @CheckInDate,
+                        check_out_date = @CheckOutDate,
+                        is_verified = @IsVerified
+                        WHERE id = @Id";
+
+            var parameters = new
+            {
+                Id = reservation.Id,
+                CheckInDate = reservation.DateRange.CheckInDate,
+                CheckOutDate = reservation.DateRange.CheckOutDate,
+                IsVerified = reservation.IsVerified
+            };
+
+            using var conn = _sqlConnectionFactory.CreateSqlConnection();
+            conn.Execute(sql, parameters);
         }
     }
 }
