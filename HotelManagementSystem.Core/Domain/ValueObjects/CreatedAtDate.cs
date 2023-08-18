@@ -9,12 +9,9 @@
             Value = date;
         }
 
-        public static CreatedAtDate Create(DateTime date)
+        public static CreatedAtDate Create()
         {
-            if (date > DateTime.Now)
-            {
-                return null;
-            }
+            var date = DateTime.Now;
 
             return new CreatedAtDate(date);
         }
