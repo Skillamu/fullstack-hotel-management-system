@@ -5,7 +5,6 @@ using HotelManagementSystem.Infrastructure.DataAccess.Entities;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Infrastructure.DataAccess.Mappers;
 using HotelManagementSystem.Core.Domain.ValueObjects;
-using System.Data.SqlClient;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 {
@@ -30,9 +29,9 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             return room;
         }
 
-        public bool IsRoomAvailableWithinDateRange(short roomNr, DateRange dateRange)
+        public Room GetAvailableRoomWithinDateRange(short roomNr, DateRange dateRange)
         {
-            var sql = @"SELECT room.room_nr AS RoomNr 
+            var sql = @"SELECT room.id AS Id, room.room_nr AS RoomNr 
                         FROM room
                         LEFT JOIN reservation
                         ON room.id = reservation.room_id
@@ -49,9 +48,9 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             };
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            var isRoomAvailable = conn.QuerySingleOrDefault<bool>(sql, parameters);
+            var room = conn.QuerySingleOrDefault<Room>(sql, parameters);
 
-            return isRoomAvailable;
+            return room;
         }
     }
 }
