@@ -1,5 +1,6 @@
 using HotelManagementSystem.Core.Application.Services;
 using HotelManagementSystem.Core.Domain.Services;
+using HotelManagementSystem.Infrastructure.Communication.Factories;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Infrastructure.DataAccess.Repositories;
 
@@ -17,6 +18,12 @@ namespace HotelManagementSystem
 
             var connStr = builder.Configuration["connectionString"];
             builder.Services.AddSingleton(new SqlConnectionFactory(connStr));
+
+            var accountSid = builder.Configuration["accountSid"];
+            var authToken = builder.Configuration["authToken"];
+            var verificationServiceSid = builder.Configuration["verificationServiceSid"];
+
+            builder.Services.AddSingleton(new TwilioResourceFactory(accountSid, authToken, verificationServiceSid));
 
             builder.Services.AddScoped<IRoomRepository, RoomRepository>();
             builder.Services.AddScoped<IGuestRepository, GuestRepository>();
