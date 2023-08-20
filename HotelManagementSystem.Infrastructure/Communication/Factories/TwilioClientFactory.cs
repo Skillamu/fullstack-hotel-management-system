@@ -3,11 +3,11 @@ using Twilio.Rest.Verify.V2.Service;
 
 namespace HotelManagementSystem.Infrastructure.Communication.Factories
 {
-    public class TwilioConnectionFactory
+    public class TwilioClientFactory
     {
         private readonly string _verificationServiceSid;
 
-        public TwilioConnectionFactory(string accountSid, string authToken, string verificationServiceSid)
+        public TwilioClientFactory(string accountSid, string authToken, string verificationServiceSid)
         {
             TwilioClient.Init(accountSid, authToken);
 
