@@ -56,5 +56,14 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 
             return guestAlreadyExists;
         }
+
+        public void Delete(Guest guest)
+        {
+            var sql = @"DELETE FROM guest WHERE id = @Id";
+            var parameters = new { Id = guest.Id };
+
+            using var conn = _sqlConnectionFactory.CreateSqlConnection();
+            conn.Execute(sql, parameters);
+        }
     }
 }
