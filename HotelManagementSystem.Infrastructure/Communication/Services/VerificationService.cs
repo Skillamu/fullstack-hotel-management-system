@@ -5,21 +5,21 @@ namespace HotelManagementSystem.Infrastructure.Communication.Verification
 {
     public class VerificationService : IVerificationService
     {
-        private readonly TwilioClientFactory _twilioClientFactory;
+        private readonly TwilioResourceFactory _twilioResourceFactory;
 
-        public VerificationService(TwilioClientFactory twilioClientFactory)
+        public VerificationService(TwilioResourceFactory twilioResourceFactory)
         {
-            _twilioClientFactory = twilioClientFactory;
+            _twilioResourceFactory = twilioResourceFactory;
         }
 
         public void Send(string phoneNr)
         {
-            _twilioClientFactory.CreateVerificationResource(phoneNr);
+            _twilioResourceFactory.CreateVerificationResource(phoneNr);
         }
 
         public bool Verify(string phoneNr, string verificationCode)
         {
-            var verificationCheck = _twilioClientFactory.CreateVerificationCheckResource(phoneNr, verificationCode);
+            var verificationCheck = _twilioResourceFactory.CreateVerificationCheckResource(phoneNr, verificationCode);
 
             return verificationCheck.Status == "approved";
         }
