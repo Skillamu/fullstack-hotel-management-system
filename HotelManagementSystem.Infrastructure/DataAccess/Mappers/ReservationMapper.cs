@@ -7,11 +7,6 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
 {
     internal static class ReservationMapper
     {
-        public static ReservationEntity ToEntity(this Reservation r)
-        {
-            return new ReservationEntity(r.Id, r.Guest.Id, r.Room.Id, r.DateRange.CheckInDate, r.DateRange.CheckOutDate, r.CreatedAtDate.Value, r.IsVerified);
-        }
-
         // NOTE!
         // Reflection is used here due to the lack of Dapper functionality when it comes to mapping multiple
         // tables to one object that is well encapsulated with private setters
