@@ -15,14 +15,24 @@ namespace HotelManagementSystem.Controllers
             _reservationService = reservationService;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ReservationDto> Create(ReservationDto request)
+        public ActionResult CreateReservation(ReservationDto request)
         {
             var reservation = _reservationService.Create(request);
 
-            return reservation == null ? BadRequest() : Ok(request);
+            return reservation == null ? BadRequest() : Ok();
+        }
+
+        [HttpPost("verify")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult VerifyReservation(VerificationDto request)
+        {
+            var verificationSucceed = _reservationService.Verify(request);
+
+            return !verificationSucceed ? BadRequest() : Ok();
         }
     }
 }
