@@ -17,21 +17,9 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             _sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public Room GetRoomByRoomNr(short roomNr)
-        {
-            var sql = @"SELECT id AS Id, room_nr AS RoomNr FROM room WHERE room_nr = @RoomNr";
-
-            var parameters = new { RoomNr = roomNr };
-
-            using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            var roomEntity = conn.QuerySingleOrDefault<RoomEntity>(sql, parameters);
-            var room = roomEntity.ToDomain();
-            return room;
-        }
-
         public Room GetAvailableRoomWithinDateRange(short roomNr, DateRange dateRange)
         {
-            var sql = @"SELECT room.id AS Id, room.room_nr AS RoomNr 
+            var sql = @"SELECT room.id AS _id, room.room_nr AS RoomNr 
                         FROM room
                         LEFT JOIN reservation
                         ON room.id = reservation.room_id
