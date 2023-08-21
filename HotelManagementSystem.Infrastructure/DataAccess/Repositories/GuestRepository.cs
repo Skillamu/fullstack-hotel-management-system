@@ -33,7 +33,7 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 
         public Guest GetGuestByPhoneNr(string phoneNr)
         {
-            var sql = @"SELECT id AS Id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr
+            var sql = @"SELECT id AS _id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr
                         FROM guest WHERE phone_nr = @PhoneNr";
 
             var parameters = new { PhoneNr = phoneNr };
@@ -46,15 +46,15 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 
         public bool GuestByPhoneNrAlreadyExists(string phoneNr)
         {
-            var sql = @"SELECT id AS Id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr
+            var sql = @"SELECT id AS _id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr
                         FROM guest WHERE phone_nr = @PhoneNr";
 
             var parameters = new { PhoneNr = phoneNr };
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            var guestAlreadyExists = conn.QuerySingleOrDefault<bool>(sql, parameters);
+            var guest = conn.QuerySingleOrDefault<Guest>(sql, parameters);
 
-            return guestAlreadyExists;
+            return guest != null;
         }
 
         public void Delete(Guest guest)
