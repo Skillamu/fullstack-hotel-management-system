@@ -2,11 +2,11 @@
 {
     public class RoomDto
     {
-        public short RoomNr { get; private set; }
+        public bool HasCityView { get; private set; }
 
-        public RoomDto(short roomNr)
+        public RoomDto(bool hasCityView)
         {
-            RoomNr = roomNr;
+            HasCityView = hasCityView;
         }
     }
 }
