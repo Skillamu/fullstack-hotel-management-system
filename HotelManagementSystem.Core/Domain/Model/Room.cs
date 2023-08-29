@@ -5,6 +5,7 @@
         private readonly Guid _id;
         public Guid Id => _id;
         public short RoomNr { get; private set; }
+        public bool HasCityView { get; private set; }
 
         private Room()
         {
