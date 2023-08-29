@@ -32,7 +32,7 @@ namespace HotelManagementSystem.Core.Application.Services
                 return null;
             }
 
-            var room = _roomRepository.GetAvailableRoomWithinDateRange(request.Room.RoomNr, dateRange);
+            var room = _roomRepository.GetRoomWithinDateRange(request.Room.HasCityView, dateRange);
 
             if (room == null)
             {
