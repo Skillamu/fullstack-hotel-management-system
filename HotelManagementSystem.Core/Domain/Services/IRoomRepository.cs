@@ -5,6 +5,6 @@ namespace HotelManagementSystem.Core.Domain.Services
 {
     public interface IRoomRepository
     {
-        Room GetAvailableRoomWithinDateRange(short roomNr, DateRange dateRange);
+        Room GetRoomWithinDateRange(bool hasCityView, DateRange dateRange);
     }
 }
