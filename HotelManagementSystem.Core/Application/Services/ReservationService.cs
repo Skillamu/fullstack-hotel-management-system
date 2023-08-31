@@ -53,16 +53,7 @@ namespace HotelManagementSystem.Core.Application.Services
                 return null;
             }
 
-            var guestAlreadyExists = _guestRepository.GuestByPhoneNrAlreadyExists(guest.PhoneNr);
-
-            if (!guestAlreadyExists)
-            {
-                _guestRepository.Create(guest);
-                _reservationRepository.Create(reservation);
-                _verificationService.Send(guest.PhoneNr);
-                return request;
-            }
-
+            _guestRepository.Create(guest);
             _reservationRepository.Create(reservation);
             _verificationService.Send(guest.PhoneNr);
             return request;
