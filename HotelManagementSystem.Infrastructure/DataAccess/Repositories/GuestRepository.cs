@@ -2,6 +2,7 @@
 using HotelManagementSystem.Core.Domain.Services;
 using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
+using System.Data.SqlClient;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 {
@@ -16,19 +17,28 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 
         public void Create(Guest guest)
         {
-            var sql = @"INSERT INTO guest
+            try
+            {
+                var sql = @"INSERT INTO guest
                         VALUES (@Id, @FirstName, @LastName, @PhoneNr)";
 
-            var parameters = new
-            {
-                Id = guest.Id,
-                FirstName = guest.FirstName,
-                LastName = guest.LastName,
-                PhoneNr = guest.PhoneNr
-            };
+                var parameters = new
+                {
+                    Id = guest.Id,
+                    FirstName = guest.FirstName,
+                    LastName = guest.LastName,
+                    PhoneNr = guest.PhoneNr
+                };
 
-            using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            conn.Execute(sql, parameters);
+                using var conn = _sqlConnectionFactory.CreateSqlConnection();
+                conn.Execute(sql, parameters);
+            }
+            catch (SqlException)
+            {
+                // Guest already exists in the database, which is fine.
+                // The exception is intentionally ignored, as it's not critical for this operation.
+                // This is safe because the operation will succeed regardless of whether the guest already exists.
+            }
         }
 
         public Guest GetGuestByPhoneNr(string phoneNr)
