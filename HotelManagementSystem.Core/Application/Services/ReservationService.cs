@@ -20,7 +20,7 @@ namespace HotelManagementSystem.Core.Application.Services
             _verificationService = verificationService;
         }
 
-        public ReservationDto Create(ReservationDto request)
+        public Reservation Create(ReservationDto request)
         {
             _ = DateTime.TryParse(request.DateRange.CheckInDate, out DateTime checkInDate);
             _ = DateTime.TryParse(request.DateRange.CheckOutDate, out DateTime checkOutDate);
@@ -56,7 +56,7 @@ namespace HotelManagementSystem.Core.Application.Services
             _guestRepository.Create(guest);
             _reservationRepository.Create(reservation);
             _verificationService.Send(guest.PhoneNr);
-            return request;
+            return reservation;
         }
 
         public bool Verify(Guid id, string verificationCode)
