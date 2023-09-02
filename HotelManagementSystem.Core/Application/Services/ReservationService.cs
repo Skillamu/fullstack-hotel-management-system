@@ -59,12 +59,18 @@ namespace HotelManagementSystem.Core.Application.Services
             return request;
         }
 
-        public bool Verify(VerificationDto request)
+        public bool Verify(Guid id, string verificationCode)
         {
-            var reservation = _reservationRepository.GetUnverifiedReservationByGuestPhoneNr(request.PhoneNr);
-            var verificationSucceed = _verificationService.Verify(request.PhoneNr, request.VerificationCode);
+            var reservation = _reservationRepository.GetById(id);
 
-            if (reservation == null || reservation.TimeToVerifyHasExpired() || !verificationSucceed)
+            if (reservation == null)
+            {
+                return false;
+            }
+
+            var verificationSucceed = _verificationService.Verify(reservation.Guest.PhoneNr, verificationCode);
+
+            if (reservation.TimeToVerifyHasExpired() || !verificationSucceed)
             {
                 return false;
             }
