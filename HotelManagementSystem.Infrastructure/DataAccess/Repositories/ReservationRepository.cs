@@ -58,6 +58,29 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             return reservation;
         }
 
+        public Reservation GetById(Guid id)
+        {
+            var sql = @"SELECT reservation.id AS Id, check_in_date AS CheckInDate, check_out_date AS CheckOutDate,
+                        created_at_date AS CreatedAtdate, is_verified AS IsVerified,
+                        guest_id AS Id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr,
+                        room_id AS Id, room_nr AS RoomNr
+                        FROM reservation
+                        JOIN guest ON reservation.guest_id = guest.id
+                        JOIN room ON reservation.room_id = room.id
+                        WHERE reservation.id = @Id";
+
+            using var conn = _sqlConnectionFactory.CreateSqlConnection();
+
+            var reservation = conn.Query<ReservationEntity, GuestEntity, RoomEntity, Reservation>(sql, (reservationEntity, guestEntity, roomEntity) =>
+            {
+                return ReservationMapper.ToDomain(reservationEntity, guestEntity, roomEntity);
+            },
+            param: new { Id = id },
+            splitOn: "Id, Id").SingleOrDefault();
+
+            return reservation;
+        }
+
         public void Update(Reservation reservation)
         {
             var sql = @"UPDATE reservation SET 
