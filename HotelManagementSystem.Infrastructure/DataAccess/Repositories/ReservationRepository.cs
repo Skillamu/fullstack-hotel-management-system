@@ -63,7 +63,7 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             var sql = @"SELECT reservation.id AS Id, check_in_date AS CheckInDate, check_out_date AS CheckOutDate,
                         created_at_date AS CreatedAtdate, is_verified AS IsVerified,
                         guest_id AS Id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr,
-                        room_id AS Id, room_nr AS RoomNr
+                        room_id AS Id, room_nr AS RoomNr, has_city_view AS HasCityView
                         FROM reservation
                         JOIN guest ON reservation.guest_id = guest.id
                         JOIN room ON reservation.room_id = room.id
