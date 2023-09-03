@@ -70,6 +70,9 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Mappers
             var roomRoomNrProperty = roomType.GetProperty("RoomNr", BindingFlags.Instance | BindingFlags.Public);
             roomRoomNrProperty.SetValue(room, roomEntity.RoomNr);
 
+            var roomHasCityViewProperty = roomType.GetProperty("HasCityView", BindingFlags.Instance | BindingFlags.Public);
+            roomHasCityViewProperty.SetValue(room, roomEntity.HasCityView);
+
             return room;
         }
 
