@@ -38,5 +38,16 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 
             return room;
         }
+
+        public IEnumerable<RoomType> GetRoomTypes()
+        {
+            var sql = @"SELECT type AS Type, has_city_view AS HasCityView, has_bathtub AS HasBathtub
+                        FROM room_type";
+
+            using var conn = _sqlConnectionFactory.CreateSqlConnection();
+            var roomTypes = conn.Query<RoomType>(sql);
+
+            return roomTypes;
+        }
     }
 }
