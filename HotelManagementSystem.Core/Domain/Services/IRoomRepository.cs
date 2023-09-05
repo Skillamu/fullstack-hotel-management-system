@@ -6,5 +6,6 @@ namespace HotelManagementSystem.Core.Domain.Services
     public interface IRoomRepository
     {
         Room GetRoomWithinDateRange(bool hasCityView, DateRange dateRange);
+        IEnumerable<RoomType> GetRoomTypes();
     }
 }
