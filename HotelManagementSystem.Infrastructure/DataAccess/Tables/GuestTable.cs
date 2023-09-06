@@ -1,6 +1,6 @@
 ﻿namespace HotelManagementSystem.Infrastructure.DataAccess.Entities
 {
-    public class GuestEntity
+    public class GuestTable
     {
         public Guid Id { get; }
         public string FirstName { get; }

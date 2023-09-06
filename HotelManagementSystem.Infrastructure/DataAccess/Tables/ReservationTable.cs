@@ -1,6 +1,6 @@
 ﻿namespace HotelManagementSystem.Infrastructure.DataAccess.Entities
 {
-    public class ReservationEntity
+    public class ReservationTable
     {
         public Guid Id { get; }
         public Guid GuestId { get; }

@@ -1,9 +1,9 @@
 ﻿namespace HotelManagementSystem.Infrastructure.DataAccess.Entities
 {
-    public class RoomEntity
+    public class RoomTable
     {
         public Guid Id { get; }
+        public Guid RoomTypeId { get; }
         public short RoomNr { get; }
-        public bool HasCityView { get; }
     }
 }
