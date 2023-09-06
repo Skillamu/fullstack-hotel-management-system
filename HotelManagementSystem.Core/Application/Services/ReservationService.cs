@@ -22,8 +22,8 @@ namespace HotelManagementSystem.Core.Application.Services
 
         public Reservation Create(ReservationDto request)
         {
-            _ = DateTime.TryParse(request.DateRange.CheckInDate, out DateTime checkInDate);
-            _ = DateTime.TryParse(request.DateRange.CheckOutDate, out DateTime checkOutDate);
+            _ = DateTime.TryParse(request.CheckInDate, out DateTime checkInDate);
+            _ = DateTime.TryParse(request.CheckOutDate, out DateTime checkOutDate);
 
             var dateRange = DateRange.Create(checkInDate, checkOutDate);
 
@@ -32,7 +32,14 @@ namespace HotelManagementSystem.Core.Application.Services
                 return null;
             }
 
-            var room = _roomRepository.GetRoomWithinDateRange(request.Room.HasCityView, dateRange);
+            var roomType = RoomType.OfType(request.Room.Type);
+
+            if (roomType == null)
+            {
+                return null;
+            }
+
+            var room = _roomRepository.GetRoomWithinDateRange(roomType, dateRange);
 
             if (room == null)
             {
