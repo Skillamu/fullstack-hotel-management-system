@@ -2,11 +2,11 @@
 {
     public class RoomDto
     {
-        public bool HasCityView { get; private set; }
+        public string Type { get; private set; }
 
-        public RoomDto(bool hasCityView)
+        public RoomDto(string type)
         {
-            HasCityView = hasCityView;
+            Type = type;
         }
     }
 }
