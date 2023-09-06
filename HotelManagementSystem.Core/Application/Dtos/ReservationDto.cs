@@ -4,13 +4,15 @@
     {
         public GuestDto Guest { get; private set; }
         public RoomDto Room { get; private set; }
-        public DateRangeDto DateRange { get; private set; }
+        public string CheckInDate { get; private set; }
+        public string CheckOutDate { get; private set; }
 
-        public ReservationDto(GuestDto guest, RoomDto room, DateRangeDto dateRange)
+        public ReservationDto(GuestDto guest, RoomDto room, string checkInDate, string checkOutDate)
         {
             Guest = guest;
             Room = room;
-            DateRange = dateRange;
+            CheckInDate = checkInDate;
+            CheckOutDate = checkOutDate;
         }
     }
 }
