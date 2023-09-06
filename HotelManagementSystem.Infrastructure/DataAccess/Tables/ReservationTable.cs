@@ -1,4 +1,4 @@
-﻿namespace HotelManagementSystem.Infrastructure.DataAccess.Entities
+﻿namespace HotelManagementSystem.Infrastructure.DataAccess.Tables
 {
     public class ReservationTable
     {
