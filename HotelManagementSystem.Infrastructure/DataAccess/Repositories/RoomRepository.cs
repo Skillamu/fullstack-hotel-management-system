@@ -3,6 +3,8 @@ using HotelManagementSystem.Core.Domain.Services;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Core.Domain.ValueObjects;
 using HotelManagementSystem.Core.Domain.Model;
+using HotelManagementSystem.Infrastructure.DataAccess.Tables;
+using HotelManagementSystem.Infrastructure.DataAccess.Mappers;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 {
@@ -15,26 +17,35 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             _sqlConnectionFactory = sqlConnectionFactory;
         }
 
-        public Room GetRoomWithinDateRange(bool hasCityView, DateRange dateRange)
+        public Room GetRoomWithinDateRange(RoomType roomType, DateRange dateRange)
         {
-            var sql = @"SELECT room.id AS _id, room.room_nr AS RoomNr, has_city_view AS HasCityView
+            var sql = @"SELECT room.id AS Id, room.room_nr AS RoomNr,
+                        room_type_id AS Id, room_type.type AS Type,
+                        room_type.has_city_view AS HasCityView,
+                        room_type.has_bathtub AS HasBathtub 
                         FROM room
+                        JOIN room_type ON room.room_type_id = room_type.id
                         LEFT JOIN reservation
                         ON room.id = reservation.room_id
                         AND reservation.check_in_date <= @CheckOutDate
                         AND reservation.check_out_date >= @CheckInDate
                         WHERE reservation.room_id IS NULL
-                        AND room.has_city_view = @HasCityView";
+                        AND room_type.type = @Type";
 
             var parameters = new
             {
-                HasCityView = hasCityView,
+                Type = roomType.Type,
                 CheckInDate = dateRange.CheckInDate,
                 CheckOutDate = dateRange.CheckOutDate
             };
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            var room = conn.QueryFirstOrDefault<Room>(sql, parameters);
+            var room = conn.Query<RoomTable, RoomTypeTable, Room>(sql, (roomTable, roomTypeTable) =>
+            {
+                return RoomMapper.ToDomain(roomTable, roomTypeTable);
+            },
+            param: parameters,
+            splitOn: "Id").FirstOrDefault();
 
             return room;
         }
