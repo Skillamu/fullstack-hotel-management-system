@@ -13,8 +13,22 @@
             HasBathtub = hasBathtub;
         }
 
-        public static RoomType Standard => new RoomType("Standard", false, false);
-        public static RoomType Superior => new RoomType("Superior", true, false);
-        public static RoomType Deluxe => new RoomType("Deluxe", true, true);
+        public static RoomType? OfType(string type)
+        {
+            var roomTypes = new RoomType[]
+            {
+                Standard,
+                Superior,
+                Deluxe
+            };
+
+            var roomType = roomTypes.SingleOrDefault(x => x.Type == type);
+
+            return roomType;
+        }
+
+        private static RoomType Standard => new RoomType("Standard", false, false);
+        private static RoomType Superior => new RoomType("Superior", true, false);
+        private static RoomType Deluxe => new RoomType("Deluxe", true, true);
     }
 }
