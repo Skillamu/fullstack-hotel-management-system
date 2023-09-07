@@ -3,7 +3,7 @@ using HotelManagementSystem.Core.Domain.Services;
 using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Infrastructure.DataAccess.Mappers;
-using HotelManagementSystem.Infrastructure.DataAccess.Entities;
+using HotelManagementSystem.Infrastructure.DataAccess.Tables;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 {
@@ -40,20 +40,23 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             var sql = @"SELECT reservation.id AS Id, check_in_date AS CheckInDate, check_out_date AS CheckOutDate,
                         created_at_date AS CreatedAtdate, is_verified AS IsVerified,
                         guest_id AS Id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr,
-                        room_id AS Id, room_nr AS RoomNr
+                        room_id AS Id, room_nr AS RoomNr, room_type_id AS Id, room_type.type AS Type,
+                        has_city_view AS HasCityView, has_bathtub AS HasBathtub
                         FROM reservation
                         JOIN guest ON reservation.guest_id = guest.id
                         JOIN room ON reservation.room_id = room.id
+                        JOIN room_type ON room.room_type_id = room_type.id
                         WHERE phone_nr = @PhoneNr AND is_verified = 'False'";
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
 
-            var reservation = conn.Query<ReservationEntity, GuestEntity, RoomEntity, Reservation>(sql, (reservationEntity, guestEntity, roomEntity) =>
+            var reservation = conn.Query<ReservationTable, GuestTable, RoomTable, RoomTypeTable, Reservation>(
+                sql, (reservationTable, guestTable, roomTable, roomTypeTable) =>
             {
-                return ReservationMapper.ToDomain(reservationEntity, guestEntity, roomEntity);
+                return ReservationMapper.ToDomain(reservationTable, guestTable, roomTable, roomTypeTable);
             },
             param: new { PhoneNr = phoneNr },
-            splitOn: "Id, Id").SingleOrDefault();
+            splitOn: "Id, Id, Id").SingleOrDefault();
 
             return reservation;
         }
@@ -63,20 +66,23 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             var sql = @"SELECT reservation.id AS Id, check_in_date AS CheckInDate, check_out_date AS CheckOutDate,
                         created_at_date AS CreatedAtdate, is_verified AS IsVerified,
                         guest_id AS Id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr,
-                        room_id AS Id, room_nr AS RoomNr, has_city_view AS HasCityView
+                        room_id AS Id, room_nr AS RoomNr, room_type_id AS Id, room_type.type AS Type,
+                        has_city_view AS HasCityView, has_bathtub AS HasBathtub
                         FROM reservation
                         JOIN guest ON reservation.guest_id = guest.id
                         JOIN room ON reservation.room_id = room.id
+                        JOIN room_type ON room.room_type_id = room_type.id
                         WHERE reservation.id = @Id";
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
 
-            var reservation = conn.Query<ReservationEntity, GuestEntity, RoomEntity, Reservation>(sql, (reservationEntity, guestEntity, roomEntity) =>
+            var reservation = conn.Query<ReservationTable, GuestTable, RoomTable, RoomTypeTable, Reservation>(
+                sql, (reservationTable, guestTable, roomTable, roomTypeTable) =>
             {
-                return ReservationMapper.ToDomain(reservationEntity, guestEntity, roomEntity);
+                return ReservationMapper.ToDomain(reservationTable, guestTable, roomTable, roomTypeTable);
             },
             param: new { Id = id },
-            splitOn: "Id, Id").SingleOrDefault();
+            splitOn: "Id, Id, Id").SingleOrDefault();
 
             return reservation;
         }
