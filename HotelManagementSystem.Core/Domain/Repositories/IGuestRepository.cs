@@ -7,5 +7,6 @@ namespace HotelManagementSystem.Core.Domain.Repositories
         void Create(Guest guest);
         void Delete(Guest guest);
         Guest GetGuestByPhoneNr(string phoneNr);
+        Guest GetById(Guid id);
     }
 }
