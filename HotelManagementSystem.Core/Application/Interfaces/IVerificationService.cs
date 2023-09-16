@@ -1,4 +1,4 @@
-﻿namespace HotelManagementSystem.Core.Domain.Services
+﻿namespace HotelManagementSystem.Core.Application.Interfaces
 {
     public interface IVerificationService
     {
