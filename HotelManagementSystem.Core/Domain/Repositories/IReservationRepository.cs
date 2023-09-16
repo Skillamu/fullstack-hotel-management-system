@@ -1,6 +1,6 @@
 ﻿using HotelManagementSystem.Core.Domain.Model;
 
-namespace HotelManagementSystem.Core.Domain.Services
+namespace HotelManagementSystem.Core.Domain.Repositories
 {
     public interface IReservationRepository
     {

@@ -1,7 +1,7 @@
 ﻿using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Core.Domain.ValueObjects;
 
-namespace HotelManagementSystem.Core.Domain.Services
+namespace HotelManagementSystem.Core.Domain.Repositories
 {
     public interface IRoomRepository
     {
