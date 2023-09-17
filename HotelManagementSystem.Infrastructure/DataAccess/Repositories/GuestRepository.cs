@@ -67,19 +67,6 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
             return guest;
         }
 
-        public bool GuestByPhoneNrAlreadyExists(string phoneNr)
-        {
-            var sql = @"SELECT id AS _id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr
-                        FROM guest WHERE phone_nr = @PhoneNr";
-
-            var parameters = new { PhoneNr = phoneNr };
-
-            using var conn = _sqlConnectionFactory.CreateSqlConnection();
-            var guest = conn.QuerySingleOrDefault<Guest>(sql, parameters);
-
-            return guest != null;
-        }
-
         public void Delete(Guest guest)
         {
             var sql = @"DELETE FROM guest WHERE id = @Id";
