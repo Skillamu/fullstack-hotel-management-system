@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using HotelManagementSystem.Core.Domain.Services;
+using HotelManagementSystem.Core.Domain.Repositories;
 using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using System.Data.SqlClient;
@@ -47,6 +47,19 @@ namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
                         FROM guest WHERE phone_nr = @PhoneNr";
 
             var parameters = new { PhoneNr = phoneNr };
+
+            using var conn = _sqlConnectionFactory.CreateSqlConnection();
+            var guest = conn.QuerySingleOrDefault<Guest>(sql, parameters);
+
+            return guest;
+        }
+
+        public Guest GetById(Guid id)
+        {
+            var sql = @"SELECT id AS _id, first_name AS FirstName, last_name AS LastName, phone_nr AS PhoneNr
+                        FROM guest WHERE id = @Id";
+
+            var parameters = new { Id = id };
 
             using var conn = _sqlConnectionFactory.CreateSqlConnection();
             var guest = conn.QuerySingleOrDefault<Guest>(sql, parameters);
