@@ -2,6 +2,6 @@
 {
     public interface IAuthTokenService
     {
-        string GenerateToken();
+        string GenerateToken(Guid guestId);
     }
 }
