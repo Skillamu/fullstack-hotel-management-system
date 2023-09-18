@@ -1,7 +1,6 @@
-﻿using HotelManagementSystem.Core.Domain.Services;
-using HotelManagementSystem.Infrastructure.Communication.Factories;
+﻿using HotelManagementSystem.Core.Application.Interfaces;
 
-namespace HotelManagementSystem.Infrastructure.Communication.Verification
+namespace HotelManagementSystem.Infrastructure.Services.Identity
 {
     public class VerificationService : IVerificationService
     {

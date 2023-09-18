@@ -1,7 +1,7 @@
 ﻿using Twilio;
 using Twilio.Rest.Verify.V2.Service;
 
-namespace HotelManagementSystem.Infrastructure.Communication.Factories
+namespace HotelManagementSystem.Infrastructure.Services.Identity
 {
     public class TwilioResourceFactory
     {
