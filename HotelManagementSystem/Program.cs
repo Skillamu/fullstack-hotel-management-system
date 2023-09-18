@@ -4,6 +4,9 @@ using HotelManagementSystem.Core.Domain.Repositories;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Infrastructure.DataAccess.Repositories;
 using HotelManagementSystem.Infrastructure.Services.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace HotelManagementSystem
 {
@@ -15,6 +18,19 @@ namespace HotelManagementSystem
 
             builder.Services.Configure<AuthTokenOptions>(
                 builder.Configuration.GetSection(AuthTokenOptions.Jwt));
+
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+             .AddJwtBearer(options =>
+             {
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuerSigningKey = true,
+                     ValidIssuer = builder.Configuration["jwt:issuer"],
+                     ValidAudience = builder.Configuration["jwt:audience"],
+                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:secretKey"])),
+                     ClockSkew = TimeSpan.Zero
+                 };
+             });
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -32,6 +48,7 @@ namespace HotelManagementSystem
             builder.Services.AddScoped<IGuestRepository, GuestRepository>();
             builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
             builder.Services.AddScoped<IVerificationService, VerificationService>();
+            builder.Services.AddScoped<IAuthTokenService, AuthTokenService>();
 
             builder.Services.AddScoped<ReservationService>();
             builder.Services.AddScoped<LoginService>();
