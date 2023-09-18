@@ -1,9 +1,9 @@
+using HotelManagementSystem.Core.Application.Interfaces;
 using HotelManagementSystem.Core.Application.Services;
-using HotelManagementSystem.Core.Domain.Services;
-using HotelManagementSystem.Infrastructure.Communication.Factories;
-using HotelManagementSystem.Infrastructure.Communication.Verification;
+using HotelManagementSystem.Core.Domain.Repositories;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Infrastructure.DataAccess.Repositories;
+using HotelManagementSystem.Infrastructure.Services.Identity;
 
 namespace HotelManagementSystem
 {
@@ -12,6 +12,9 @@ namespace HotelManagementSystem
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.Configure<AuthTokenOptions>(
+                builder.Configuration.GetSection(AuthTokenOptions.Jwt));
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +34,7 @@ namespace HotelManagementSystem
             builder.Services.AddScoped<IVerificationService, VerificationService>();
 
             builder.Services.AddScoped<ReservationService>();
+            builder.Services.AddScoped<LoginService>();
 
             var app = builder.Build();
 
@@ -41,6 +45,7 @@ namespace HotelManagementSystem
             }
 
             app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
             app.UseStaticFiles();
