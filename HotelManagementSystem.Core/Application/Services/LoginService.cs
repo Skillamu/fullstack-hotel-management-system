@@ -46,7 +46,7 @@ namespace HotelManagementSystem.Core.Application.Services
                 return null;
             }
 
-            var token = _authTokenService.GenerateToken();
+            var token = _authTokenService.GenerateToken(guest.Id);
 
             return token;
         }
