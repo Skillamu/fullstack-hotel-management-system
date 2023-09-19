@@ -9,6 +9,7 @@ namespace HotelManagementSystem.Core.Domain.Repositories
         void Delete(Reservation reservation);
         Reservation GetUnverifiedReservationByGuestPhoneNr(string phoneNr);
         Reservation GetById(Guid id);
+        IEnumerable<Reservation> GetAllByGuestId(Guid guestId);
 
         // int DeleteUnverifiedReservations(); Will add this later.
     }
