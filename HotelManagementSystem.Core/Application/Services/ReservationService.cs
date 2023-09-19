@@ -1,7 +1,8 @@
-﻿using HotelManagementSystem.Core.Domain.Services;
-using HotelManagementSystem.Core.Domain.Model;
+﻿using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Core.Application.Dtos;
 using HotelManagementSystem.Core.Domain.ValueObjects;
+using HotelManagementSystem.Core.Application.Interfaces;
+using HotelManagementSystem.Core.Domain.Repositories;
 
 namespace HotelManagementSystem.Core.Application.Services
 {
@@ -85,6 +86,28 @@ namespace HotelManagementSystem.Core.Application.Services
             reservation.SetToVerified();
             _reservationRepository.Update(reservation);
             return true;
+        }
+
+        public IEnumerable<ReservationListForGuestResponseDto>? ShowGuestReservations(Guid guestId)
+        {
+            var guest = _guestRepository.GetById(guestId);
+
+            if (guest == null)
+            {
+                return null;
+            }
+
+            var reservations = _reservationRepository.GetAllByGuestId(guest.Id);
+
+            var reservationsDto = reservations.Select(x => new ReservationListForGuestResponseDto
+            {
+                RoomNr = x.Room.RoomNr,
+                Type = x.Room.RoomType.Type,
+                CheckInDate = x.DateRange.CheckInDate.ToShortDateString(),
+                CheckOutDate = x.DateRange.CheckOutDate.ToShortDateString()
+            });
+
+            return reservationsDto;
         }
     }
 }
