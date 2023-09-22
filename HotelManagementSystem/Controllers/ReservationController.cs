@@ -1,6 +1,5 @@
 ﻿using HotelManagementSystem.Core.Application.Dtos;
 using HotelManagementSystem.Core.Application.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementSystem.Controllers
@@ -34,23 +33,6 @@ namespace HotelManagementSystem.Controllers
             var verificationSucceed = _reservationService.Verify(id, verificationCode);
 
             return !verificationSucceed ? BadRequest() : Ok();
-        }
-
-        [Authorize]
-        [HttpGet("guests/{guestId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ReservationListForGuestResponseDto> ShowGuestReservations(Guid guestId)
-        {
-            if (!User.HasClaim("guest_id", $"{guestId}"))
-            {
-                Unauthorized();
-            }
-
-            var reservationsDto = _reservationService.ShowGuestReservations(guestId);
-
-            return reservationsDto == null ? BadRequest() : Ok(reservationsDto);
         }
     }
 }
