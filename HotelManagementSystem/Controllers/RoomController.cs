@@ -1,5 +1,5 @@
 ﻿using HotelManagementSystem.Core.Application.Dtos;
-using HotelManagementSystem.Core.Domain.Services;
+using HotelManagementSystem.Core.Domain.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementSystem.WebApi.Controllers

@@ -1,10 +1,10 @@
 ﻿using Dapper;
-using HotelManagementSystem.Core.Domain.Services;
 using HotelManagementSystem.Infrastructure.DataAccess.Factories;
 using HotelManagementSystem.Core.Domain.ValueObjects;
 using HotelManagementSystem.Core.Domain.Model;
 using HotelManagementSystem.Infrastructure.DataAccess.Tables;
 using HotelManagementSystem.Infrastructure.DataAccess.Mappers;
+using HotelManagementSystem.Core.Domain.Repositories;
 
 namespace HotelManagementSystem.Infrastructure.DataAccess.Repositories
 {
