@@ -56,5 +56,10 @@ namespace HotelManagementSystem.Core.Domain.Model
 
             return false;   
         }
+
+        public bool ValidCancellationTimeHasExpired()
+        {
+            return DateRange.CheckInDate.AddDays(-1) < DateTime.Now;
+        }
     }
 }
