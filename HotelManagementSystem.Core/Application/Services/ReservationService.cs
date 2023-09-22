@@ -110,5 +110,26 @@ namespace HotelManagementSystem.Core.Application.Services
 
             return reservationsDto;
         }
+
+        public bool? CancelReservation(Guid id)
+        {
+            var reservation = _reservationRepository.GetById(id);
+
+            if (reservation == null)
+            {
+                return null;
+            }
+
+            if (reservation.ValidCancellationTimeHasExpired())
+            {
+                // Will not add a feature for this in the application, but
+                // the guest will be charged a certain amount of money
+                // since the valid cancellation time has expired
+            }
+
+            _reservationRepository.Delete(reservation);
+
+            return true;
+        }
     }
 }
