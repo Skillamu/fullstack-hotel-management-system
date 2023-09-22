@@ -52,6 +52,7 @@ namespace HotelManagementSystem
 
             builder.Services.AddScoped<ReservationService>();
             builder.Services.AddScoped<LoginService>();
+            builder.Services.AddScoped<AccessControlService>();
 
             var app = builder.Build();
 
