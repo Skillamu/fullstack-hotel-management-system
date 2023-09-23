@@ -1,4 +1,5 @@
-﻿using HotelManagementSystem.Core.Application.Interfaces;
+﻿using HotelManagementSystem.Core.Application.Dtos;
+using HotelManagementSystem.Core.Application.Interfaces;
 using HotelManagementSystem.Core.Domain.Repositories;
 
 namespace HotelManagementSystem.Core.Application.Services
@@ -16,21 +17,21 @@ namespace HotelManagementSystem.Core.Application.Services
             _guestRepository = guestRepository;
         }
 
-        public Guid? SendVerificationCode(string phoneNr)
+        public Guid? SendVerificationCode(LoginForGuestRequestDto loginRequestDto)
         {
-            var guest = _guestRepository.GetGuestByPhoneNr(phoneNr);
+            var guest = _guestRepository.GetGuestByPhoneNr(loginRequestDto.PhoneNr);
 
             if (guest == null)
             {
                 return null;
             }
 
-            _verificationService.Send(phoneNr);
+            _verificationService.Send(guest.PhoneNr);
 
             return guest.Id;
         }
 
-        public string? VerifyVerificationCodeAndGenerateToken(Guid id, string verificationCode)
+        public string? VerifyVerificationCodeAndGenerateToken(Guid id, LoginVerifyForGuestRequestDto loginVerifyRequestDto)
         {
             var guest = _guestRepository.GetById(id);
 
@@ -39,7 +40,7 @@ namespace HotelManagementSystem.Core.Application.Services
                 return null;
             }
 
-            var verificationSucceed = _verificationService.Verify(guest.PhoneNr, verificationCode);
+            var verificationSucceed = _verificationService.Verify(guest.PhoneNr, loginVerifyRequestDto.VerificationCode);
 
             if (!verificationSucceed)
             {

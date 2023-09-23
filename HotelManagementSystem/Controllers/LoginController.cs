@@ -1,4 +1,5 @@
-﻿using HotelManagementSystem.Core.Application.Services;
+﻿using HotelManagementSystem.Core.Application.Dtos;
+using HotelManagementSystem.Core.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelManagementSystem.WebApi.Controllers
@@ -15,17 +16,17 @@ namespace HotelManagementSystem.WebApi.Controllers
         }
 
         [HttpPost("guests")]
-        public ActionResult<Guid> SendVerificationCode([FromBody] string phoneNr)
+        public ActionResult<Guid> SendVerificationCode(LoginForGuestRequestDto loginRequestDto)
         {
-            var guestId = _loginService.SendVerificationCode(phoneNr);
+            var guestId = _loginService.SendVerificationCode(loginRequestDto);
 
             return guestId == null ? BadRequest() : Ok(guestId);
         }
 
         [HttpPost("guests/{id}")]
-        public ActionResult<string> VerifyVerificationCodeAndGenerateToken(Guid id, [FromBody] string verificationCode)
+        public ActionResult<string> VerifyVerificationCodeAndGenerateToken(Guid id, LoginVerifyForGuestRequestDto loginVerifyRequestDto)
         {
-            var token = _loginService.VerifyVerificationCodeAndGenerateToken(id, verificationCode);
+            var token = _loginService.VerifyVerificationCodeAndGenerateToken(id, loginVerifyRequestDto);
 
             if (token == null)
             {
