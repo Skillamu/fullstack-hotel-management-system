@@ -15,25 +15,20 @@ namespace HotelManagementSystem.WebApi.Controllers
             _loginService = loginService;
         }
 
-        [HttpPost("guests")]
-        public ActionResult<Guid> SendVerificationCode(LoginForGuestRequestDto loginRequestDto)
+        [HttpPost]
+        public ActionResult SendVerificationCode(LoginForGuestRequestDto loginRequestDto)
         {
-            var guestId = _loginService.SendVerificationCode(loginRequestDto);
+            var wasSent = _loginService.SendVerificationCode(loginRequestDto);
 
-            return guestId == null ? BadRequest() : Ok(guestId);
+            return !wasSent ? BadRequest() : Ok();
         }
 
-        [HttpPost("guests/{id}")]
-        public ActionResult<string> VerifyVerificationCodeAndGenerateToken(Guid id, LoginVerifyForGuestRequestDto loginVerifyRequestDto)
+        [HttpPost("verify")]
+        public ActionResult<string> VerifyVerificationCodeAndGenerateToken(LoginVerifyForGuestRequestDto loginVerifyRequestDto)
         {
-            var token = _loginService.VerifyVerificationCodeAndGenerateToken(id, loginVerifyRequestDto);
+            var token = _loginService.VerifyVerificationCodeAndGenerateToken(loginVerifyRequestDto);
 
-            if (token == null)
-            {
-                return BadRequest();
-            }
-
-            return Ok(token);
+            return token == null ? BadRequest() : Ok(token);
         }
     }
 }

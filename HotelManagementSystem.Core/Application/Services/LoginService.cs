@@ -17,23 +17,23 @@ namespace HotelManagementSystem.Core.Application.Services
             _guestRepository = guestRepository;
         }
 
-        public Guid? SendVerificationCode(LoginForGuestRequestDto loginRequestDto)
+        public bool SendVerificationCode(LoginForGuestRequestDto loginRequestDto)
         {
             var guest = _guestRepository.GetGuestByPhoneNr(loginRequestDto.PhoneNr);
 
             if (guest == null)
             {
-                return null;
+                return false;
             }
 
             _verificationService.Send(guest.PhoneNr);
 
-            return guest.Id;
+            return true;
         }
 
-        public string? VerifyVerificationCodeAndGenerateToken(Guid id, LoginVerifyForGuestRequestDto loginVerifyRequestDto)
+        public string? VerifyVerificationCodeAndGenerateToken(LoginVerifyForGuestRequestDto loginVerifyRequestDto)
         {
-            var guest = _guestRepository.GetById(id);
+            var guest = _guestRepository.GetGuestByPhoneNr(loginVerifyRequestDto.PhoneNr);
 
             if (guest == null)
             {
