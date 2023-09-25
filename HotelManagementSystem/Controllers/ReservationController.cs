@@ -28,9 +28,9 @@ namespace HotelManagementSystem.Controllers
         [HttpPost("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult VerifyReservation(Guid id, [FromBody] string verificationCode)
+        public ActionResult VerifyReservation(Guid id, ReservationVerifyRequestDto reservationVerifyRequestDto)
         {
-            var verificationSucceed = _reservationService.Verify(id, verificationCode);
+            var verificationSucceed = _reservationService.Verify(id, reservationVerifyRequestDto);
 
             return !verificationSucceed ? BadRequest() : Ok();
         }

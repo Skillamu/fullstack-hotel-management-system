@@ -68,7 +68,7 @@ namespace HotelManagementSystem.Core.Application.Services
             return reservation.Id;
         }
 
-        public bool Verify(Guid id, string verificationCode)
+        public bool Verify(Guid id, ReservationVerifyRequestDto reservationVerifyRequestDto)
         {
             var reservation = _reservationRepository.GetById(id);
 
@@ -77,7 +77,7 @@ namespace HotelManagementSystem.Core.Application.Services
                 return false;
             }
 
-            var verificationSucceed = _verificationService.Verify(reservation.Guest.PhoneNr, verificationCode);
+            var verificationSucceed = _verificationService.Verify(reservation.Guest.PhoneNr, reservationVerifyRequestDto.VerificationCode);
 
             if (reservation.TimeToVerifyHasExpired() || !verificationSucceed)
             {
