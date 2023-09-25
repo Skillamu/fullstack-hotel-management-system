@@ -21,7 +21,7 @@ namespace HotelManagementSystem.Core.Application.Services
             _verificationService = verificationService;
         }
 
-        public Guid? Create(ReservationDto request)
+        public Guid? Create(ReservationRequestDto request)
         {
             _ = DateTime.TryParse(request.CheckInDate, out DateTime checkInDate);
             _ = DateTime.TryParse(request.CheckOutDate, out DateTime checkOutDate);
@@ -89,7 +89,7 @@ namespace HotelManagementSystem.Core.Application.Services
             return true;
         }
 
-        public IEnumerable<ReservationListForGuestResponseDto>? ShowGuestReservations(Guid guestId)
+        public IEnumerable<ReservationResponseDto>? ShowReservations(Guid guestId)
         {
             var guest = _guestRepository.GetById(guestId);
 
@@ -100,15 +100,15 @@ namespace HotelManagementSystem.Core.Application.Services
 
             var reservations = _reservationRepository.GetAllByGuestId(guest.Id);
 
-            var reservationsDto = reservations.Select(x => new ReservationListForGuestResponseDto
+            var reservationsResponseDto = reservations.Select(reservation => new ReservationResponseDto
             {
-                RoomNr = x.Room.RoomNr,
-                Type = x.Room.RoomType.Type,
-                CheckInDate = x.DateRange.CheckInDate.ToShortDateString(),
-                CheckOutDate = x.DateRange.CheckOutDate.ToShortDateString()
+                RoomNr = reservation.Room.RoomNr,
+                Type = reservation.Room.RoomType.Type,
+                CheckInDate = reservation.DateRange.CheckInDate.ToShortDateString(),
+                CheckOutDate = reservation.DateRange.CheckOutDate.ToShortDateString()
             });
 
-            return reservationsDto;
+            return reservationsResponseDto;
         }
 
         public bool? CancelReservation(Guid id)

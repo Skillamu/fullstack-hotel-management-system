@@ -24,7 +24,7 @@ namespace HotelManagementSystem.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<ReservationListForGuestResponseDto> ShowGuestReservations(Guid guestId)
+        public ActionResult<ReservationResponseDto> ShowReservations(Guid guestId)
         {
             var hasAccess = _accessControlService.HasAccessToResource(User.FindFirstValue("guest_id"), guestId);
 
@@ -33,9 +33,9 @@ namespace HotelManagementSystem.WebApi.Controllers
                 return Unauthorized();
             }
 
-            var reservationsDto = _reservationService.ShowGuestReservations(guestId);
+            var reservationsResponseDto = _reservationService.ShowReservations(guestId);
 
-            return reservationsDto == null ? BadRequest() : Ok(reservationsDto);
+            return reservationsResponseDto == null ? BadRequest() : Ok(reservationsResponseDto);
         }
 
         [Authorize]

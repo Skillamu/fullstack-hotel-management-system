@@ -17,12 +17,12 @@ namespace HotelManagementSystem.WebApi.Controllers
 
         [HttpGet("roomtypes")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<IEnumerable<RoomTypeDto>> GetRoomTypes()
+        public ActionResult<IEnumerable<RoomTypeResponseDto>> GetRoomTypes()
         {
-            var roomTypesDto = _roomRepository.GetRoomTypes()
-                .Select(x => new RoomTypeDto(x.Type, x.HasCityView, x.HasBathtub));
+            var roomTypesResponseDto = _roomRepository.GetRoomTypes()
+                .Select(roomType => new RoomTypeResponseDto(roomType.Type, roomType.HasCityView, roomType.HasBathtub));
 
-            return Ok(roomTypesDto);
+            return Ok(roomTypesResponseDto);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace HotelManagementSystem.WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendVerificationCode(LoginForGuestRequestDto loginRequestDto)
+        public ActionResult SendVerificationCode(LoginRequestDto loginRequestDto)
         {
             var wasSent = _loginService.SendVerificationCode(loginRequestDto);
 
@@ -24,7 +24,7 @@ namespace HotelManagementSystem.WebApi.Controllers
         }
 
         [HttpPost("verify")]
-        public ActionResult<string> VerifyVerificationCodeAndGenerateToken(LoginVerifyForGuestRequestDto loginVerifyRequestDto)
+        public ActionResult<string> VerifyVerificationCodeAndGenerateToken(LoginVerifyRequestDto loginVerifyRequestDto)
         {
             var token = _loginService.VerifyVerificationCodeAndGenerateToken(loginVerifyRequestDto);
 

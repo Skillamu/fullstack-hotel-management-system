@@ -18,9 +18,9 @@ namespace HotelManagementSystem.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult CreateReservation(ReservationDto request)
+        public ActionResult CreateReservation(ReservationRequestDto reservationRequestDto)
         {
-            var reservationId = _reservationService.Create(request);
+            var reservationId = _reservationService.Create(reservationRequestDto);
 
             return reservationId == null ? BadRequest() : CreatedAtAction("VerifyReservation", new { Id = reservationId }, null);
         }

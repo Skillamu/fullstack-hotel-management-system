@@ -1,10 +1,10 @@
 ﻿namespace HotelManagementSystem.Core.Application.Dtos
 {
-    public class RoomDto
+    public class RoomRequestDto
     {
         public string Type { get; private set; }
 
-        public RoomDto(string type)
+        public RoomRequestDto(string type)
         {
             Type = type;
         }

@@ -1,6 +1,6 @@
 ﻿namespace HotelManagementSystem.Core.Application.Dtos
 {
-    public class ReservationListForGuestResponseDto
+    public class ReservationResponseDto
     {
         public short RoomNr { get; set; }
         public string Type { get; set; }

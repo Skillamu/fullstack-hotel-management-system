@@ -17,7 +17,7 @@ namespace HotelManagementSystem.Core.Application.Services
             _guestRepository = guestRepository;
         }
 
-        public bool SendVerificationCode(LoginForGuestRequestDto loginRequestDto)
+        public bool SendVerificationCode(LoginRequestDto loginRequestDto)
         {
             var guest = _guestRepository.GetGuestByPhoneNr(loginRequestDto.PhoneNr);
 
@@ -31,7 +31,7 @@ namespace HotelManagementSystem.Core.Application.Services
             return true;
         }
 
-        public string? VerifyVerificationCodeAndGenerateToken(LoginVerifyForGuestRequestDto loginVerifyRequestDto)
+        public string? VerifyVerificationCodeAndGenerateToken(LoginVerifyRequestDto loginVerifyRequestDto)
         {
             var guest = _guestRepository.GetGuestByPhoneNr(loginVerifyRequestDto.PhoneNr);
 
