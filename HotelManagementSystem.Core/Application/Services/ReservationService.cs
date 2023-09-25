@@ -72,7 +72,7 @@ namespace HotelManagementSystem.Core.Application.Services
         {
             var reservation = _reservationRepository.GetById(id);
 
-            if (reservation == null)
+            if (reservation == null || reservation.IsVerified)
             {
                 return false;
             }
@@ -86,6 +86,7 @@ namespace HotelManagementSystem.Core.Application.Services
 
             reservation.SetToVerified();
             _reservationRepository.Update(reservation);
+
             return true;
         }
 
