@@ -59,10 +59,28 @@ async function findReservationsView() {
     })
 
     if (response.status == 404 || response.status == 401) {
-        console.log("Not Found or Unauthorized")
+        app.innerHTML = `
+        <h1>Find your reservations</h1>
+
+        <p>To find your reservations, please enter your phone number and click “Send”. <br>
+        We’ll use this phone number to verify your identity and retrieve your reservations.</p>
+
+        <h2>Phone number</h2>
+        <input type="text"> <br>
+        <button onclick="sendVerificationCode()">Send</button> <br> <br>
+        `
         return
     }
 
-    const reservations = await response.json()
-    console.log(reservations)
+    app.innerHTML = `
+    <h1>Your reservations</h1>
+    <p>Coming soon...</p>
+    `
+}
+
+async function sendVerificationCode() {
+    app.innerHTML = `
+    <h1>Find your reservations</h1>
+    <p>Coming soon...</p>
+    `
 }
